@@ -4,6 +4,15 @@
 
 #include "SocketUtils.h"
 
-void SocketUtils::createUDPSocket() {
+UDPSocketPtr SocketUtils::createUDPSocket() {
     int s = socket(AF_INET, SOCK_DGRAM, 0);
+    if (s > 0)
+    {
+        return std::make_shared<UDPSocket>(new UDPSocket());
+    }
+    else
+    {
+        spdlog::error("SocketUtils::createUDPSocket");
+        return nullptr;
+    }
 }

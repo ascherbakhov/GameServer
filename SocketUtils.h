@@ -6,9 +6,12 @@
 #define NETWORK_SOCKETUTILS_H
 
 #include "sys/socket.h"
+#include "spdlog/spdlog.h"
+#include "UDPSocket.h"
+
 
 class SocketUtils {
-    void createUDPSocket();
+    UDPSocketPtr createUDPSocket();
 };
 
 
