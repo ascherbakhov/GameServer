@@ -2,22 +2,19 @@
 #include <cstring>
 #include "sys/socket.h"
 #include "arpa/inet.h"
+#include "SocketAddress.h"
+#include "UDPSocket.h"
+#include "SocketHelpers.h"
 
 
 int main() {
-    struct sockaddr_in addr{};
-    memset(&addr, 0, sizeof(addr));
-    addr.sin_family = AF_INET;
-    addr.sin_port = 43000;
-    inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr.s_addr);
-
-    int fdsock = socket(AF_INET, SOCK_DGRAM, 0);
-    int error = bind(fdsock, reinterpret_cast<struct sockaddr *>(&addr), sizeof(addr));
-    if (error)
-    {
-            std::cout << "Error binding addr for socket!" << std::endl;
-    }
-
-
+    char data[9000];
+    SocketAddress address{"127.0.0.1", 43000};
+    UDPSocketPtr socket = SocketHelpers::createUDPSocket();
+    socket->SetNonBlockingMode(true);
+    socket->Bind(address);
+    SocketAddress inSockAddress;
+    int bytesNum = socket->ReceiveFrom(data, 9000, inSockAddress);
+    socket->Close();
     return 0;
 }

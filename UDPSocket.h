@@ -14,9 +14,13 @@
 class UDPSocket {
 public:
     void Bind(SocketAddress address);
-    void ReceiveFrom();
+    int ReceiveFrom(void*, int, SocketAddress&);
+    void SetNonBlockingMode(bool isNonBlocking);
+    void Close();
 private:
+    explicit UDPSocket(int socket) : mSocket(socket){};
     int mSocket;
+    friend class SocketHelpers;
 };
 
 typedef std::shared_ptr<UDPSocket> UDPSocketPtr;

@@ -8,15 +8,17 @@
 
 #include <bits/socket.h>
 #include <string>
-
+#include <netinet/in.h>
 
 class SocketAddress {
 public:
-    SocketAddress(const char *ip_addr, u_int16_t port);
-    sockaddr* Get();
+    SocketAddress(const char* ip_addr, u_int16_t port);
+    SocketAddress(const sockaddr_in&);
+    SocketAddress() {memset(&mAddress, 0, sizeof(sockaddr_in));}
     size_t Size();
+    sockaddr* Get();
 private:
-    sockaddr* mAddress;
+    sockaddr_in mAddress;
 };
 
 
