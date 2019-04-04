@@ -13,10 +13,10 @@
 
 class UDPSocket {
 public:
-    void Bind(SocketAddress address);
+    int Bind(SocketAddress address);
     int ReceiveFrom(void*, int, SocketAddress&);
+    int Close();
     void SetNonBlockingMode(bool isNonBlocking);
-    void Close();
 private:
     explicit UDPSocket(int socket) : mSocket(socket){};
     int mSocket;

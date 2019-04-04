@@ -5,14 +5,14 @@
 #include <spdlog/spdlog.h>
 #include "UDPSocket.h"
 
-void UDPSocket::Bind(SocketAddress address)
+int UDPSocket::Bind(SocketAddress address)
 {
     int err = bind(mSocket, address.Get(), address.Size());
     if (err != 0)
     {
         spdlog::error("UDPSocket::Bind: {0}", strerror(errno));
-        exit(err); //TODO: remove with correct exiting
     }
+    return err;
 }
 
 
@@ -25,21 +25,11 @@ int UDPSocket::ReceiveFrom(void* buffer, int len, SocketAddress& fromAddr)
             0,
             fromAddr.Get(),
             &fromLen);
-    if (bytesNum >=0)
-    {
-        return bytesNum;
-    }
-    else if (errno == EAGAIN)
-    {
-        spdlog::error("Blocking operation, repeat later");
-        return -1;
-    }
-    else
+    if (errno != EAGAIN)
     {
         spdlog::error("Error reading from socket: {}", strerror(errno));
-        return -1;
     }
-
+        return bytesNum;
 }
 
 void UDPSocket::SetNonBlockingMode(bool isNonBlocking) {
@@ -48,9 +38,11 @@ void UDPSocket::SetNonBlockingMode(bool isNonBlocking) {
     fcntl(mSocket, F_SETFL, flags);
 }
 
-void UDPSocket::Close() {
-    if (close(mSocket))
+int UDPSocket::Close() {
+    int err = close(mSocket);
+    if (err)
     {
         spdlog::error("Error while closing socket, errno={0}", strerror(errno));
     }
+    return err;
 }
