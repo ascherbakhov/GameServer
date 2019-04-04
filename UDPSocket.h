@@ -8,13 +8,13 @@
 #include <memory>
 #include <sys/socket.h>
 #include <spdlog/spdlog.h>
-#include "SocketAddress.h"
+#include "NetworkInterface.h"
 
 
 class UDPSocket {
 public:
-    int Bind(SocketAddress address);
-    int ReceiveFrom(void*, int, SocketAddress&);
+    int Bind(NetworkInterface address);
+    int ReceiveFrom(void*, int, NetworkInterface&);
     int Close();
     void SetNonBlockingMode(bool isNonBlocking);
 private:

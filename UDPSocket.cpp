@@ -5,7 +5,7 @@
 #include <spdlog/spdlog.h>
 #include "UDPSocket.h"
 
-int UDPSocket::Bind(SocketAddress address)
+int UDPSocket::Bind(NetworkInterface address)
 {
     int err = bind(mSocket, address.Get(), address.Size());
     if (err != 0)
@@ -16,7 +16,7 @@ int UDPSocket::Bind(SocketAddress address)
 }
 
 
-int UDPSocket::ReceiveFrom(void* buffer, int len, SocketAddress& fromAddr)
+int UDPSocket::ReceiveFrom(void* buffer, int len, NetworkInterface& fromAddr)
 {
     socklen_t fromLen = fromAddr.Size();
     int bytesNum = recvfrom(mSocket,
