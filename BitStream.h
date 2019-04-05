@@ -13,16 +13,23 @@ typedef uint16_t bufflen_t;
 
 class BitStream {
 public:
-    BitStream(bufflen_t capacity) { Reallocate(512); }
+    BitStream(bufflen_t capacity) { Reserve(512); }
     ~BitStream(){std::free(mBuffer);}
     bufflen_t GetBufferSizeLeft(){ return mCapacity - mHead;}
-    void Write(uint8_t data, size_t size);
+    void WriteBits(uint8_t data, size_t size);
+    void WriteBits(const void *data, size_t size);
     void Read(void* data, size_t size);
-    void Reallocate(bufflen_t newBitSize);
+    void Reserve(bufflen_t newBitSize);
 private:
     bufflen_t mCapacity;
     bufflen_t mHead;
     char* mBuffer;
+
+    template <class T>
+    void Write(T data, size_t size = sizeof(T) * 8)
+    {
+
+    }
 };
 
 

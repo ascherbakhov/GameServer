@@ -10,24 +10,43 @@ void BitStream::Read(void *data, size_t size) {
 
 }
 
-void BitStream::Write(uint8_t data, size_t size) {
+void BitStream::WriteBits(uint8_t data, size_t size) {
     bufflen_t newHead = mHead + static_cast<bufflen_t>(size);
     if (newHead > mHead)
     {
-        Reallocate(std::max<bufflen_t>(2 * mCapacity, newHead));
+        Reserve(std::max<bufflen_t>(2 * mCapacity, newHead));
     }
-    bufflen_t lastByte = mHead >> 3;
-    bufflen_t lastBit = mHead & 0x7;
-    bufflen_t bitsFree = 8 - lastBit;
-    uint8_t  mask = ~(0xff << lastBit);
+    bufflen_t byteHead = mHead >> 3;
+    bufflen_t bitHead = mHead & 0x7;
+    bufflen_t bitsFree = 8 - bitHead;
+
+    //We want to write out 10111111 to [1 byte][0 byte]: [XXXXXXX][XXX10101]
+    //Result should be [XXX10111][11110101].
+    //data << bitHead would be 11100000
+    //data >> bitsFree would be 00010111
+    mBuffer[byteHead] |= (data << bitHead);
+
     if (bitsFree < size)
     {
-        mBuffer[lastByte + 1] = data >> bitsFree;
+        mBuffer[byteHead + 1] = data >> bitsFree;
     }
     mHead = newHead;
 }
 
-void BitStream::Reallocate(bufflen_t newBitSize) {
+void BitStream::WriteBits(const void* data, size_t size)
+{
+    const char* src = static_cast<const char*>(data);
+    while(size > 0)
+    {
+        size_t bitsToWrite = std::min<size_t>(8, size);
+        WriteBits(*src, bitsToWrite);
+        size -= bitsToWrite;
+        ++src;
+    }
+}
+
+
+void BitStream::Reserve(bufflen_t newBitSize) {
     if (mBuffer == nullptr)
     {
         mCapacity = newBitSize;
