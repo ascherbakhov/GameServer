@@ -63,9 +63,22 @@ void BitStream::Reserve(bufflen_t newBitSize)
 
 }
 
+//TODO: check thin function
 void BitStream::ReadBits(byte& data, size_t size)
 {
+    bufflen_t byteHead = mHead >> BYTE_SHIFT;
+    bufflen_t bitHead = mHead & 0x7;
+    bufflen_t bitsFree = BITS_PER_BYTE - bitHead;
 
+    byte result = static_cast<byte>(mBuffer[byteHead]) >> bitHead;
+    if( bitsFree < size )
+    {
+        result |= static_cast< byte >( mBuffer[ bitHead + 1 ] ) << bitsFree;
+    }
+
+    result &= ( ~( 0x00ff << size ) );
+
+    mHead += size;
 }
 
 void BitStream::ReadBits(void* data, size_t size)
