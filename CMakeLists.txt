@@ -5,6 +5,6 @@ add_subdirectory(third-party/spdlog)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Network main.cpp UDPSocket.cpp UDPSocket.h SocketHelpers.cpp SocketHelpers.h NetworkInterface.cpp NetworkInterface.h BitStream.cpp BitStream.h)
+add_executable(Network main.cpp UDPSocket.cpp UDPSocket.h SocketHelpers.cpp SocketHelpers.h SockAddr.cpp SockAddr.h BitStream.cpp BitStream.h)
 
 target_link_libraries(Network spdlog)
