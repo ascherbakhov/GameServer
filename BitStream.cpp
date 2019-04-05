@@ -10,7 +10,8 @@ void BitStream::Read(void *data, size_t size) {
 
 }
 
-void BitStream::WriteBits(uint8_t data, size_t size) {
+void BitStream::WriteBits(uint8_t data, size_t size)
+{
     bufflen_t newHead = mHead + static_cast<bufflen_t>(size);
     if (newHead > mHead)
     {
@@ -46,7 +47,8 @@ void BitStream::WriteBits(const void* data, size_t size)
 }
 
 
-void BitStream::Reserve(bufflen_t newBitSize) {
+void BitStream::Reserve(bufflen_t newBitSize)
+{
     if (mBuffer == nullptr)
     {
         mCapacity = newBitSize;
@@ -62,4 +64,9 @@ void BitStream::Reserve(bufflen_t newBitSize) {
         mBuffer = newBuffer;
     }
 
+}
+
+void BitStream::Write(bool data, size_t size)
+{
+    WriteBits(&data, size);
 }
