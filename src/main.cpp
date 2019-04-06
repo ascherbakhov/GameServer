@@ -23,8 +23,9 @@ int main() {
     BitStream bitStream(256);
     uint16_t dd = 2000;
     uint16_t newData = 0;
-    bitStream.Write<uint16_t >(dd);
-    bitStream.Read(newData);
     spdlog::error("{}", newData);
+    bitStream.Write<uint16_t >(dd);
+    spdlog::error("{}", newData);
+    bitStream.Read(newData);
     return 0;
 }
