@@ -24,7 +24,7 @@ private:
     void WriteBits(byte data, size_t size);
     void WriteBits(const void *data, size_t size);
 
-    void ReadBits(uint &data, size_t size);
+    void ReadBits(byte &data, size_t size);
     void ReadBits(void* data, size_t size);
 
 public:
