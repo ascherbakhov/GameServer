@@ -4,7 +4,6 @@
 
 #include <cstring>
 #include <algorithm>
-#include <spdlog/spdlog.h>
 #include "include/BitStream.h"
 
 

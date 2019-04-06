@@ -6,9 +6,10 @@
 
 TEST(BitStream, uint16_t)
 {
-//    BitStream bitStream(256);
-//    uint16_t data = 2000;
-//    uint16_t newData = 0;
-//    bitStream.Write<uint16_t>(data, 16);
-//    ASSERT_EQ(newData, 2000);
+    BitStream bitStream(256);
+    uint16_t data = 2000;
+    uint16_t newData = 0;
+    bitStream.Write<uint16_t>(data, 16);
+    bitStream.Read<uint16_t >(newData);
+    ASSERT_EQ(newData, 2000);
 }

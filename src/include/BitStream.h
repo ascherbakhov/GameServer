@@ -19,7 +19,6 @@ class BitStream {
 private:
     bufflen_t mCapacity;
     bufflen_t mHead;
-    byte* mBuffer;
 
     void WriteBits(byte data, size_t size);
     void WriteBits(const void *data, size_t size);
@@ -28,6 +27,8 @@ private:
     void ReadBits(void* data, size_t size);
 
 public:
+    byte* mBuffer;
+
     explicit BitStream(bufflen_t capacity):
     mBuffer(nullptr), mHead(0), mCapacity(0)
     {
