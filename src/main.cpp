@@ -2,10 +2,11 @@
 #include <cstring>
 #include "sys/socket.h"
 #include "arpa/inet.h"
-#include "SockAddr.h"
-#include "UDPSocket.h"
-#include "SocketHelpers.h"
-
+#include "include/SockAddr.h"
+#include "include/UDPSocket.h"
+#include "include/SocketHelpers.h"
+#include "include/BitStream.h"
+#include <spdlog/spdlog.h>
 
 int main() {
     int bufferLen  = 900;
@@ -17,5 +18,13 @@ int main() {
     SockAddr inSockAddress;
     int bytesNum = socket->ReceiveFrom(data, bufferLen, inSockAddress);
     socket->Close();
+
+
+    BitStream bitStream(256);
+    uint16_t dd = 2000;
+    uint16_t newData = 0;
+    bitStream.Write<uint16_t >(dd);
+    bitStream.Read(newData);
+    spdlog::error("{}", newData);
     return 0;
 }

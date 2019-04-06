@@ -6,7 +6,7 @@
 #define NETWORK_SOCKETHELPERS_H
 
 #include "sys/socket.h"
-#include "spdlog/spdlog.h"
+#include "../../third-party/spdlog/include/spdlog/spdlog.h"
 #include "UDPSocket.h"
 
 

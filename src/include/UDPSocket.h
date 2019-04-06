@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <sys/socket.h>
-#include <spdlog/spdlog.h>
+#include "../../third-party/spdlog/include/spdlog/spdlog.h"
 #include "SockAddr.h"
 
 

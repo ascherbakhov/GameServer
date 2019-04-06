@@ -4,7 +4,8 @@
 
 #include <cstring>
 #include <algorithm>
-#include "BitStream.h"
+#include <spdlog/spdlog.h>
+#include "include/BitStream.h"
 
 
 void BitStream::WriteBits(byte data, size_t size)
