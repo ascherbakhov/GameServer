@@ -61,6 +61,27 @@ void OutputBitStream::Reserve(bufflen_t newBitSize)
     }
 }
 
+void OutputBitStream::Write(std::string& str)
+{
+    auto elementsCount = static_cast<uint32_t>(str.size());
+    Write(elementsCount);
+    for (const auto element : str)
+    {
+        Write(element);
+    }
+}
+
+void InputBitStream::Read(std::string& inStr)
+{
+    uint32_t elementsCount;
+    Read<uint32_t>(elementsCount);
+    inStr.resize(elementsCount);
+    for (auto& element: inStr)
+    {
+        Read(element);
+    }
+}
+
 //TODO: check thin function
 void InputBitStream::ReadBits(byte& data, size_t size)
 {

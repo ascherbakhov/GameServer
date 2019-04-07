@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <cstdlib>
+#include <string>
 
 typedef uint16_t bufflen_t;
 typedef char byte;
@@ -49,7 +50,7 @@ public:
         WriteBits(&data, size);
     }
     void Write(bool data) { WriteBits(&data, 1); };
-
+    void Write(std::string& str);
 };
 
 
@@ -79,6 +80,7 @@ public:
         ReadBits(&data, size);
     };
     void Read(bool& data) { ReadBits(&data, 1); }
+    void Read(std::string& inStr);
 };
 
 
