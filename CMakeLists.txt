@@ -5,7 +5,7 @@ set(CMAKE_CXX_STANDARD 14)
 add_subdirectory(third-party/spdlog)
 add_subdirectory(third-party/googletest)
 
-include_directories(src/include third-party/googletest/googletest/include)
+include_directories(src/include third-party/googletest/googletest/include third-party/spdlog/include)
 
 add_executable(Network src/main.cpp src/UDPSocket.cpp src/include/UDPSocket.h
                src/SocketHelpers.cpp src/include/SocketHelpers.h src/SockAddr.cpp

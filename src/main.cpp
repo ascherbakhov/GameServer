@@ -21,7 +21,7 @@ int main() {
 
     BitStream bitStream(256);
     uint16_t data = 2000;
-    uint16_t newData = 0;
+    uint16_t newData = 1;
     bitStream.Write<uint16_t>(data, 16);
     bitStream.Read<uint16_t >(newData);
     return 0;
