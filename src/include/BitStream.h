@@ -37,6 +37,7 @@ public:
         int byteCount = mCapacity >> BYTE_SHIFT;
         mBuffer = static_cast<byte*>(malloc(byteCount));
         memcpy(mBuffer, other.mBuffer, byteCount);
+        auto a = mHead;
     }
     ~BitStream(){ std::free(mBuffer); }
 

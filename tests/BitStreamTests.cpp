@@ -23,7 +23,7 @@ TEST(BitStream, typesSerialization)
     BitStream bitStream2(bitStream);
     bitStream2.Read(newInt16);
     bitStream2.Read(newInt8);
-    bitStream.Read(newBl);
+    bitStream2.Read(newBl);
     EXPECT_EQ(newInt16, int16);
     EXPECT_EQ(newInt8, int8);
     EXPECT_EQ(newBl, bl);
