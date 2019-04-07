@@ -65,3 +65,23 @@ TEST(BitStream, typesSerialization)
     EXPECT_EQ(doubleNum, doubleNew);
     EXPECT_EQ(newStr, str);
 }
+
+TEST(BitStream, BoolTest)
+{
+    uint8_t uint8 = 235;
+    uint8_t newUint8;
+
+    bool bl = true;
+    bool newBl;
+
+    OutputBitStream bitStream(256);
+    bitStream.Write(bl);
+    bitStream.Write(newUint8);
+
+    InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
+    bitStream2.Read(newBl);
+    bitStream2.Read(newUint8);
+
+    EXPECT_EQ(bl, newBl);
+    EXPECT_EQ(uint8, newUint8);
+}
