@@ -10,9 +10,9 @@
 #include <cstdlib>
 
 typedef uint16_t bufflen_t;
-typedef uint8_t byte;
+typedef char byte;
 
-const uint8_t BITS_PER_BYTE = 8;
+const size_t BITS_PER_BYTE = 8;
 const uint8_t BYTE_SHIFT = 3;
 
 class BitStream {
