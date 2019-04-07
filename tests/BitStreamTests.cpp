@@ -25,17 +25,13 @@ TEST(BitStream, typesSerialization)
     double doubleNum = 12312.123;
     double doubleNew = 12321.312;
 
-    bool bl = true;
-    bool newBl, newBl2;
 
     std::string str("LevelUp");
     std::string newStr;
 
-//    bitStream.Write(bl);
     bitStream.Write(uint32);
     bitStream.Write(uint8);
     bitStream.Write(str);
-//    bitStream.Write(bl);
     bitStream.Write(uint16);
     bitStream.Write(floatNum);
     bitStream.Write(doubleNum);
@@ -43,11 +39,9 @@ TEST(BitStream, typesSerialization)
 
 
     InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
-//    bitStream2.Read(newBl);
     bitStream2.Read(newUint32);
     bitStream2.Read(newInt8);
     bitStream2.Read(newStr);
-//    bitStream2.Read(newBl2);
     bitStream2.Read(newInt16);
     bitStream2.Read(floatNew);
     bitStream2.Read(doubleNew);
@@ -57,8 +51,6 @@ TEST(BitStream, typesSerialization)
 
     EXPECT_EQ(newInt16, uint16);
     EXPECT_EQ(newInt8, uint8);
-//    EXPECT_EQ(newBl, bl);
-//    EXPECT_EQ(newBl2, bl);
     EXPECT_EQ(newUint32, uint32);
     EXPECT_EQ(newUint64, uint64);
     EXPECT_EQ(floatNum, floatNew);
@@ -68,20 +60,21 @@ TEST(BitStream, typesSerialization)
 
 TEST(BitStream, BoolTest)
 {
-    uint8_t uint8 = 235;
-    uint8_t newUint8;
+    typedef uint64_t addType;
+    addType num = 234;
+    addType newNum;
 
     bool bl = true;
     bool newBl;
 
     OutputBitStream bitStream(256);
     bitStream.Write(bl);
-    bitStream.Write(newUint8);
+    bitStream.Write(num);
 
     InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
     bitStream2.Read(newBl);
-    bitStream2.Read(newUint8);
+    bitStream2.Read(newNum);
 
     EXPECT_EQ(bl, newBl);
-    EXPECT_EQ(uint8, newUint8);
+    EXPECT_EQ(num, newNum);
 }

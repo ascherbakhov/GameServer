@@ -7,7 +7,7 @@
 #include "include/BitStream.h"
 
 
-void OutputBitStream::WriteBits(byte data, size_t size)
+void OutputBitStream::WriteBits(byte data, uint32_t size)
 {
     bufflen_t newHead = mHead + static_cast<bufflen_t>(size);
     if (newHead > mCapacity)
@@ -31,7 +31,7 @@ void OutputBitStream::WriteBits(byte data, size_t size)
     mHead = newHead;
 }
 
-void OutputBitStream::WriteBits(const void* data, size_t size)
+void OutputBitStream::WriteBits(const void* data, uint32_t size)
 {
     const byte* src = static_cast<const byte*>(data);
     while(size > 0)
@@ -83,7 +83,7 @@ void InputBitStream::Read(std::string& inStr)
 }
 
 //TODO: check thin function
-void InputBitStream::ReadBits(byte& data, size_t size)
+void InputBitStream::ReadBits(byte& data, uint32_t size)
 {
     bufflen_t byteHead = mHead >> BYTE_SHIFT;
     bufflen_t bitHead = mHead & 0x7;
@@ -92,7 +92,7 @@ void InputBitStream::ReadBits(byte& data, size_t size)
     data = mBuffer[byteHead] >> bitHead;
     if( bitsFree < size )
     {
-        data |=  mBuffer[ bitHead + 1 ]  << bitsFree;
+        data |=  mBuffer[ byteHead + 1 ]  << bitsFree;
     }
 
     data &= ( ~( 0x00ff << size ) );
@@ -100,7 +100,7 @@ void InputBitStream::ReadBits(byte& data, size_t size)
     mHead += size;
 }
 
-void InputBitStream::ReadBits(void* data, size_t size)
+void InputBitStream::ReadBits(void* data, uint32_t size)
 {
     byte* dest = reinterpret_cast<byte*>(data);
     while (size > 0)
