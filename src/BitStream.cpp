@@ -87,7 +87,7 @@ void BitStream::ReadBits(void* data, size_t size)
     while (size > 0)
     {
         size_t bitsToRead = std::min<size_t>(BITS_PER_BYTE, size);
-        ReadBits(&data, bitsToRead);
+        ReadBits(*dest, bitsToRead);
         size -= BITS_PER_BYTE;
         ++dest;
     }
