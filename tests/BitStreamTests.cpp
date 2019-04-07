@@ -60,7 +60,7 @@ TEST(BitStream, typesSerialization)
 
 TEST(BitStream, BoolTest)
 {
-    typedef uint64_t addType;
+    typedef uint8_t addType;
     addType num = 234;
     addType newNum;
 

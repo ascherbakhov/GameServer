@@ -7,9 +7,9 @@
 #include "include/BitStream.h"
 
 
-void OutputBitStream::WriteBits(byte data, uint32_t size)
+void OutputBitStream::WriteBits(byte data, bufflen_t size)
 {
-    bufflen_t newHead = mHead + static_cast<bufflen_t>(size);
+    bufflen_t newHead = mHead + size;
     if (newHead > mCapacity)
     {
         Reserve(std::max<bufflen_t>(2 * mCapacity, newHead));
@@ -31,7 +31,7 @@ void OutputBitStream::WriteBits(byte data, uint32_t size)
     mHead = newHead;
 }
 
-void OutputBitStream::WriteBits(const void* data, uint32_t size)
+void OutputBitStream::WriteBits(const void* data, bufflen_t size)
 {
     const byte* src = static_cast<const byte*>(data);
     while(size > 0)
@@ -74,7 +74,7 @@ void OutputBitStream::Write(std::string& str)
 void InputBitStream::Read(std::string& inStr)
 {
     uint32_t elementsCount;
-    Read<uint32_t>(elementsCount);
+    Read(elementsCount);
     inStr.resize(elementsCount);
     for (auto& element: inStr)
     {
@@ -83,7 +83,7 @@ void InputBitStream::Read(std::string& inStr)
 }
 
 //TODO: check thin function
-void InputBitStream::ReadBits(byte& data, uint32_t size)
+void InputBitStream::ReadBits(byte& data, bufflen_t size)
 {
     bufflen_t byteHead = mHead >> BYTE_SHIFT;
     bufflen_t bitHead = mHead & 0x7;
@@ -100,7 +100,7 @@ void InputBitStream::ReadBits(byte& data, uint32_t size)
     mHead += size;
 }
 
-void InputBitStream::ReadBits(void* data, uint32_t size)
+void InputBitStream::ReadBits(void* data, bufflen_t size)
 {
     byte* dest = reinterpret_cast<byte*>(data);
     while (size > 0)

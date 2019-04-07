@@ -10,7 +10,7 @@
 #include <cstdlib>
 #include <string>
 
-typedef uint16_t bufflen_t;
+typedef uint32_t bufflen_t;
 typedef char byte;
 
 const size_t BITS_PER_BYTE = 8;
@@ -22,8 +22,8 @@ private:
     bufflen_t mHead;
     byte* mBuffer;
 
-    void WriteBits(byte data, uint32_t size);
-    void WriteBits(const void *data, uint32_t size);
+    void WriteBits(byte data, bufflen_t size);
+    void WriteBits(const void *data, bufflen_t size);
 
 public:
     explicit OutputBitStream(bufflen_t capacity): mBuffer(nullptr), mHead(0), mCapacity(0)
@@ -43,7 +43,7 @@ public:
     bufflen_t GetSize() {return mHead;}
 
     template <class T>
-    void Write(T data, uint32_t size = sizeof(T) * BITS_PER_BYTE)
+    void Write(T data, bufflen_t size = sizeof(T) * BITS_PER_BYTE)
     {
         static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value,
                       "Generic BitStream::Write supports only arithmetic or enum types");
@@ -60,8 +60,8 @@ private:
     byte* mBuffer;
 
 
-    void ReadBits(byte &data, uint32_t size);
-    void ReadBits(void* data, uint32_t size);
+    void ReadBits(byte &data, bufflen_t size);
+    void ReadBits(void* data, bufflen_t size);
 
 public:
     explicit InputBitStream(const byte* buffer, bufflen_t size): mHead(0)
@@ -73,7 +73,7 @@ public:
     ~InputBitStream(){ std::free(mBuffer); }
 
     template <class T>
-    void Read(T& data, uint32_t size = sizeof(T) * BITS_PER_BYTE)
+    void Read(T& data, bufflen_t size = sizeof(T) * BITS_PER_BYTE)
     {
         static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value,
                       "Generic BitStream::Read supports only arithmetic or enum types");
