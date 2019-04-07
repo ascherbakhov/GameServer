@@ -32,7 +32,7 @@ public:
     {
         Reserve(capacity);
     }
-    BitStream(const BitStream& other): mCapacity(other.mCapacity), mHead(other.mHead)
+    BitStream(const BitStream& other): mCapacity(other.mCapacity), mHead(0)
     {
         int byteCount = mCapacity >> BYTE_SHIFT;
         mBuffer = static_cast<byte*>(malloc(byteCount));
