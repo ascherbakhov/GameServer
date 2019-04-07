@@ -19,6 +19,12 @@ TEST(BitStream, typesSerialization)
     uint64_t uint64 = 99999999;
     uint64_t newUint64;
 
+    float floatNum = 1233.1;
+    float floatNew;
+
+    double doubleNum = 12312.123;
+    double doubleNew = 12321.312;
+
     bool bl = true;
     bool newBl, newBl2;
 
@@ -31,6 +37,8 @@ TEST(BitStream, typesSerialization)
     bitStream.Write(str);
 //    bitStream.Write(bl);
     bitStream.Write(uint16);
+    bitStream.Write(floatNum);
+    bitStream.Write(doubleNum);
     bitStream.Write(uint64);
 
 
@@ -41,6 +49,8 @@ TEST(BitStream, typesSerialization)
     bitStream2.Read(newStr);
 //    bitStream2.Read(newBl2);
     bitStream2.Read(newInt16);
+    bitStream2.Read(floatNew);
+    bitStream2.Read(doubleNew);
     bitStream2.Read(newUint64);
 
 
@@ -51,5 +61,7 @@ TEST(BitStream, typesSerialization)
 //    EXPECT_EQ(newBl2, bl);
     EXPECT_EQ(newUint32, uint32);
     EXPECT_EQ(newUint64, uint64);
+    EXPECT_EQ(floatNum, floatNew);
+    EXPECT_EQ(doubleNum, doubleNew);
     EXPECT_EQ(newStr, str);
 }
