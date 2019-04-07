@@ -6,7 +6,7 @@
 
 TEST(BitStream, typesSerialization)
 {
-    BitStream bitStream(256);
+    OutputBitStream bitStream(256);
     uint16_t int16 = 2000;
     uint16_t newInt16;
 
@@ -14,17 +14,21 @@ TEST(BitStream, typesSerialization)
     uint8_t newInt8;
 
     bool bl = true;
-    bool newBl;
+    bool newBl, newBl2;
 
     bitStream.Write(int16);
+    bitStream.Write(bl);
     bitStream.Write(int8);
     bitStream.Write(bl);
 
-    BitStream bitStream2(bitStream);
+    InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
     bitStream2.Read(newInt16);
-    bitStream2.Read(newInt8);
     bitStream2.Read(newBl);
+    bitStream2.Read(newInt8);
+    bitStream2.Read(newBl2);
+
     EXPECT_EQ(newInt16, int16);
     EXPECT_EQ(newInt8, int8);
     EXPECT_EQ(newBl, bl);
+    EXPECT_EQ(newBl2, bl);
 }

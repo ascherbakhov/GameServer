@@ -15,7 +15,7 @@ typedef char byte;
 const size_t BITS_PER_BYTE = 8;
 const uint8_t BYTE_SHIFT = 3;
 
-class BitStream {
+class OutputBitStream {
 private:
     bufflen_t mCapacity;
     bufflen_t mHead;
@@ -24,26 +24,22 @@ private:
     void WriteBits(byte data, size_t size);
     void WriteBits(const void *data, size_t size);
 
-    void ReadBits(byte &data, size_t size);
-    void ReadBits(void* data, size_t size);
-
 public:
-    explicit BitStream(bufflen_t capacity): mBuffer(nullptr), mHead(0), mCapacity(0)
+    explicit OutputBitStream(bufflen_t capacity): mBuffer(nullptr), mHead(0), mCapacity(0)
     {
         Reserve(capacity);
     }
-    BitStream(const BitStream& other): mCapacity(other.mCapacity), mHead(0)
+    OutputBitStream(const OutputBitStream& other): mCapacity(other.mCapacity), mHead(other.mHead)
     {
         int byteCount = mCapacity >> BYTE_SHIFT;
         mBuffer = static_cast<byte*>(malloc(byteCount));
         memcpy(mBuffer, other.mBuffer, byteCount);
-        auto a = mHead;
     }
-    ~BitStream(){ std::free(mBuffer); }
+    ~OutputBitStream(){ std::free(mBuffer); }
 
     void Reserve(bufflen_t newBitSize);
     byte* GetBuffer() {return mBuffer;}
-    bufflen_t GetBufferSizeLeft(){ return mCapacity - mHead;}
+    bufflen_t GetSize() {return mHead;}
 
     template <class T>
     void Write(T data, size_t size = sizeof(T) * BITS_PER_BYTE)
@@ -54,6 +50,27 @@ public:
     }
     void Write(bool data) { WriteBits(&data, 1); };
 
+};
+
+
+class InputBitStream {
+private:
+    bufflen_t mHead;
+    byte* mBuffer;
+
+
+    void ReadBits(byte &data, size_t size);
+    void ReadBits(void* data, size_t size);
+
+public:
+    explicit InputBitStream(const byte* buffer, bufflen_t size): mHead(0)
+    {
+        int byteCount = (size % BITS_PER_BYTE == 0) ? (size >> BYTE_SHIFT) : ((size >> BYTE_SHIFT) + 1);
+        mBuffer = static_cast<byte*>(malloc(byteCount));
+        memcpy(mBuffer, buffer, byteCount);
+    }
+    ~InputBitStream(){ std::free(mBuffer); }
+
     template <class T>
     void Read(T& data, size_t size = sizeof(T) * BITS_PER_BYTE)
     {
@@ -62,8 +79,6 @@ public:
         ReadBits(&data, size);
     };
     void Read(bool& data) { ReadBits(&data, 1); }
-
-
 };
 
 
