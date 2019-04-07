@@ -60,21 +60,20 @@ TEST(BitStream, typesSerialization)
 
 TEST(BitStream, BoolTest)
 {
-    typedef uint8_t addType;
-    addType num = 234;
-    addType newNum;
-
     bool bl = true;
     bool newBl;
 
+    bool bl2 = false;
+    bool newBl2=true;
+
     OutputBitStream bitStream(256);
     bitStream.Write(bl);
-    bitStream.Write(num);
+    bitStream.Write(bl2);
 
     InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
     bitStream2.Read(newBl);
-    bitStream2.Read(newNum);
+    bitStream2.Read(newBl2);
 
     EXPECT_EQ(bl, newBl);
-    EXPECT_EQ(num, newNum);
+    EXPECT_EQ(bl, newBl2);
 }
