@@ -4,7 +4,7 @@
 #include <gtest/gtest.h>
 #include "../src/include/BitStream.h"
 
-TEST(BitStream, uint16_t)
+TEST(BitStream, typesSerialization)
 {
     BitStream bitStream(256);
     uint16_t int16 = 2000;

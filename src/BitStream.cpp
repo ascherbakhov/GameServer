@@ -70,10 +70,10 @@ void BitStream::ReadBits(byte& data, size_t size)
     bufflen_t bitHead = mHead & 0x7;
     bufflen_t bitsFree = BITS_PER_BYTE - bitHead;
 
-    data = static_cast<byte>(mBuffer[byteHead]) >> bitHead;
+    data = mBuffer[byteHead] >> bitHead;
     if( bitsFree < size )
     {
-        data |= static_cast< byte >( mBuffer[ bitHead + 1 ] ) << bitsFree;
+        data |=  mBuffer[ bitHead + 1 ]  << bitsFree;
     }
 
     data &= ( ~( 0x00ff << size ) );
