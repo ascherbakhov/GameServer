@@ -19,6 +19,7 @@ class BitStream {
 private:
     bufflen_t mCapacity;
     bufflen_t mHead;
+    byte* mBuffer;
 
     void WriteBits(byte data, size_t size);
     void WriteBits(const void *data, size_t size);
@@ -27,15 +28,20 @@ private:
     void ReadBits(void* data, size_t size);
 
 public:
-    byte* mBuffer;
-
-    explicit BitStream(bufflen_t capacity):
-    mBuffer(nullptr), mHead(0), mCapacity(0)
+    explicit BitStream(bufflen_t capacity): mBuffer(nullptr), mHead(0), mCapacity(0)
     {
         Reserve(capacity);
     }
+    BitStream(const BitStream& other): mCapacity(other.mCapacity), mHead(other.mHead)
+    {
+        int byteCount = mCapacity >> BYTE_SHIFT;
+        mBuffer = static_cast<byte*>(malloc(byteCount));
+        memcpy(mBuffer, other.mBuffer, byteCount);
+    }
     ~BitStream(){ std::free(mBuffer); }
+
     void Reserve(bufflen_t newBitSize);
+    byte* GetBuffer() {return mBuffer;}
     bufflen_t GetBufferSizeLeft(){ return mCapacity - mHead;}
 
     template <class T>
