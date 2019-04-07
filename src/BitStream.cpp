@@ -105,7 +105,7 @@ void InputBitStream::ReadBits(void* data, bufflen_t size)
     byte* dest = reinterpret_cast<byte*>(data);
     while (size > 0)
     {
-        size_t bitsToRead = std::min<size_t>(BITS_PER_BYTE, size);
+        bufflen_t bitsToRead = std::min<bufflen_t>(BITS_PER_BYTE, size);
         ReadBits(*dest, bitsToRead);
         size -= bitsToRead;
         ++dest;
