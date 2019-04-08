@@ -11,7 +11,7 @@
 #include <string>
 
 typedef uint32_t bufflen_t;
-typedef char byte;
+typedef unsigned char byte;
 
 const size_t BITS_PER_BYTE = 8;
 const uint8_t BYTE_SHIFT = 3;
@@ -49,11 +49,7 @@ public:
                       "Generic BitStream::Write supports only arithmetic or enum types");
         WriteBits(&data, size);
     }
-    void Write(bool data)
-    {
-        auto boolData = static_cast<uint8_t>(data);
-        Write(boolData);
-    };
+    void Write(bool data) { WriteBits(data, 1); };
     void Write(std::string& str);
 };
 
@@ -83,12 +79,7 @@ public:
                       "Generic BitStream::Read supports only arithmetic or enum types");
         ReadBits(&data, size);
     };
-    void Read(bool& data)
-    {
-        uint8_t boolData;
-        Read(boolData);
-        data = boolData;
-    }
+    void Read(bool& data)  { ReadBits(&data, 1); }
     void Read(std::string& inStr);
 };
 

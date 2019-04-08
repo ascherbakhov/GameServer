@@ -49,12 +49,12 @@ void OutputBitStream::Reserve(bufflen_t newBitSize)
     {
         mCapacity = newBitSize;
         mBuffer = static_cast<byte *>(std::malloc(newBitSize >> BYTE_SHIFT));
-        memset(mBuffer, 0, newBitSize >> BYTE_SHIFT);
+        memset(mBuffer, '\0', newBitSize >> BYTE_SHIFT);
     }
     else
     {
         byte* newBuffer =  static_cast<byte *>(std::malloc(newBitSize >> BYTE_SHIFT));
-        memset(newBuffer, 0, newBitSize >> BYTE_SHIFT);
+        memset(newBuffer, '\0', newBitSize >> BYTE_SHIFT);
         memcpy(newBuffer, mBuffer, newBitSize >> BYTE_SHIFT);
         std::free(mBuffer);
         mBuffer = newBuffer;

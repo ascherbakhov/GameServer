@@ -4,6 +4,8 @@
 #include <gtest/gtest.h>
 #include "../src/include/BitStream.h"
 
+const float FLOAT_EPS = 0.1;
+
 TEST(BitStream, typesSerialization)
 {
     OutputBitStream bitStream(256);
@@ -64,15 +66,15 @@ TEST(BitStream, typesSerialization)
     EXPECT_EQ(bl2, newBl2);
     EXPECT_EQ(newUint32, uint32);
     EXPECT_EQ(newUint64, uint64);
-    EXPECT_EQ(floatNum, floatNew);
-    EXPECT_EQ(doubleNum, doubleNew);
+    EXPECT_LE(std::abs(floatNum-floatNew), FLOAT_EPS);
+    EXPECT_LE(std::abs(doubleNum-doubleNew), FLOAT_EPS);
     EXPECT_EQ(newStr, str);
 }
 
 TEST(BitStream, BoolTest)
 {
     typedef uint32_t addType;
-    addType num = 99999;
+    addType num = 99567;
     addType newNum;
 
     bool bl = true;
