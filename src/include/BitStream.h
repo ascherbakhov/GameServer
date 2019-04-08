@@ -49,7 +49,11 @@ public:
                       "Generic BitStream::Write supports only arithmetic or enum types");
         WriteBits(&data, size);
     }
-    void Write(bool data) { WriteBits(&data, 1); };
+    void Write(bool data)
+    {
+        auto boolData = static_cast<uint8_t>(data);
+        Write(boolData);
+    };
     void Write(std::string& str);
 };
 
@@ -79,7 +83,12 @@ public:
                       "Generic BitStream::Read supports only arithmetic or enum types");
         ReadBits(&data, size);
     };
-    void Read(bool& data) { ReadBits(&data, 1); }
+    void Read(bool& data)
+    {
+        uint8_t boolData;
+        Read(boolData);
+        data = boolData;
+    }
     void Read(std::string& inStr);
 };
 
