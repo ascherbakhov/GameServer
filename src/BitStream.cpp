@@ -82,7 +82,6 @@ void InputBitStream::Read(std::string& inStr)
     }
 }
 
-//TODO: check thin function
 void InputBitStream::ReadBits(byte& data, bufflen_t size)
 {
     bufflen_t byteHead = mHead >> BYTE_SHIFT;
@@ -95,7 +94,8 @@ void InputBitStream::ReadBits(byte& data, bufflen_t size)
         data |=  mBuffer[ byteHead + 1 ]  << bitsFree;
     }
 
-    data &= ( ~( 0x00ff << size ) );
+    //Just apply mask to take only bits we want(for example only 1st bit for bool)
+    data &= ( ~( 0xff << size ) );
 
     mHead += size;
 }
