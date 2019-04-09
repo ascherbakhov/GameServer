@@ -65,7 +65,8 @@ TEST(TemplateSwapper, bool)
 {
     bool bl = false;
     bool swappedbool = ByteSwapper<bool>().get(bl);
-    char doubleSwappedBl = ByteSwapper<char>().get(swappedbool);
+    bool doubleSwappedBl = ByteSwapper<bool>().get(swappedbool);
+
     EXPECT_EQ(doubleSwappedBl, swappedbool);
     EXPECT_EQ(swappedbool, doubleSwappedBl);
 }
