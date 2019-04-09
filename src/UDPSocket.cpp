@@ -3,7 +3,7 @@
 //
 
 #include <spdlog/spdlog.h>
-#include "include/UDPSocket.h"
+#include "UDPSocket.h"
 
 int UDPSocket::Bind(SockAddr address)
 {

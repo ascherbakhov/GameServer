@@ -2,11 +2,12 @@
 #include <cstring>
 #include "sys/socket.h"
 #include "arpa/inet.h"
-#include "include/SockAddr.h"
-#include "include/UDPSocket.h"
-#include "include/SocketHelpers.h"
-#include "include/BitStream.h"
 #include <spdlog/spdlog.h>
+#include "SockAddr.h"
+#include "UDPSocket.h"
+#include "SocketHelpers.h"
+#include "BitStream.h"
+
 
 int main() {
     int bufferLen  = 900;

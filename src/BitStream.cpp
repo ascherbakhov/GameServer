@@ -4,7 +4,7 @@
 
 #include <cstring>
 #include <algorithm>
-#include "include/BitStream.h"
+#include "BitStream.h"
 
 
 void OutputBitStream::WriteBits(byte data, bufflen_t size)

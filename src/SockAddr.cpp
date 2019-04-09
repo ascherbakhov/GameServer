@@ -5,7 +5,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <spdlog/spdlog.h>
-#include "include/SockAddr.h"
+#include "SockAddr.h"
 
 SockAddr::SockAddr(const char* ip_addr, uint16_t port) {
     mAddress.sin_family = AF_INET;
