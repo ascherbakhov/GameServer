@@ -2,7 +2,7 @@
 // Created by qazer on 06.04.2019.
 //
 #include <gtest/gtest.h>
-#include "../src/include/BitStream.h"
+#include <BitStream.h>
 
 const float FLOAT_EPS = 0.1;
 
