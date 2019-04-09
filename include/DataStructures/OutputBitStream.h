@@ -1,20 +1,14 @@
 //
-// Created by qazer on 04.04.2019.
+// Created by qazer on 10.04.2019.
 //
 
-#ifndef NETWORK_BITSTREAM_H
-#define NETWORK_BITSTREAM_H
+#ifndef NETWORK_OUTPUTBITSTREAM_H
+#define NETWORK_OUTPUTBITSTREAM_H
 
-
-#include <cstdint>
-#include <cstdlib>
 #include <string>
+#include <cstring>
+#include "../utils/Constants.h"
 
-typedef uint32_t bufflen_t;
-typedef unsigned char byte;
-
-const size_t BITS_PER_BYTE = 8;
-const uint8_t BYTE_SHIFT = 3;
 
 class OutputBitStream {
 private:
@@ -53,35 +47,4 @@ public:
     void Write(std::string& str);
 };
 
-
-class InputBitStream {
-private:
-    bufflen_t mHead;
-    byte* mBuffer;
-
-
-    void ReadBits(byte &data, bufflen_t size);
-    void ReadBits(void* data, bufflen_t size);
-
-public:
-    explicit InputBitStream(const byte* buffer, bufflen_t size): mHead(0)
-    {
-        int byteCount = (size % BITS_PER_BYTE == 0) ? (size >> BYTE_SHIFT) : ((size >> BYTE_SHIFT) + 1);
-        mBuffer = static_cast<byte*>(malloc(byteCount));
-        memcpy(mBuffer, buffer, byteCount);
-    }
-    ~InputBitStream(){ std::free(mBuffer); }
-
-    template <class T>
-    void Read(T& data, bufflen_t size = sizeof(T) * BITS_PER_BYTE)
-    {
-        static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value,
-                      "Generic BitStream::Read supports only arithmetic or enum types");
-        ReadBits(&data, size);
-    };
-    void Read(bool& data)  { ReadBits(&data, 1); }
-    void Read(std::string& inStr);
-};
-
-
-#endif //NETWORK_BITSTREAM_H
+#endif //NETWORK_OUTPUTBITSTREAM_H

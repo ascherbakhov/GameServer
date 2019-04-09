@@ -6,7 +6,7 @@
 #include "SockAddr.h"
 #include "UDPSocket.h"
 #include "SocketHelpers.h"
-#include "BitStream.h"
+#include "DataStructures/BitStream.h"
 
 
 int main() {
