@@ -128,4 +128,16 @@ public:
         return IntAsType<T>(output).get();
     }
 };
+template <class T>
+T SwapBytes(T value)
+{
+    return ByteSwapper<T>().get(value);
+}
+
+inline int IsBigEndian()
+{
+    int i=1;
+    return ! *((char *)&i);
+}
+
 #endif //NETWORK_BYTESWAP_H
