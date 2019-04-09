@@ -8,13 +8,14 @@
 #include <string>
 #include <cstring>
 #include "../utils/Constants.h"
-
+#include "../utils/ByteSwap.h"
 
 class OutputBitStream {
 private:
     bufflen_t mCapacity;
     bufflen_t mHead;
     byte* mBuffer;
+    bool isLittleEndian; // Stream endianness is little endian
 
     void WriteBits(byte data, bufflen_t size);
     void WriteBits(const void *data, bufflen_t size);
@@ -33,7 +34,15 @@ public:
     {
         static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value,
                       "Generic BitStream::Write supports only arithmetic or enum types");
-        WriteBits(&data, size);
+        if (isLittleEndian)
+        {
+            WriteBits(&data, size);
+        }
+        else
+        {
+            data = SwapBytes(data);
+            WriteBits(&data, size);
+        }
     }
     void Write(bool data) { WriteBits(data, 1); };
     void Write(std::string& str);

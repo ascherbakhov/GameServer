@@ -8,13 +8,14 @@
 #include <string>
 #include <cstring>
 #include "../utils/Constants.h"
-
+#include "../utils/ByteSwap.h"
 
 
 class InputBitStream {
 private:
     bufflen_t mHead;
     byte* mBuffer;
+    bool isLittleEndian; // Stream endianness is little endian
 
     void ReadBits(byte &data, bufflen_t size);
     void ReadBits(void* data, bufflen_t size);
@@ -28,7 +29,17 @@ public:
     {
         static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value,
                       "Generic BitStream::Read supports only arithmetic or enum types");
-        ReadBits(&data, size);
+        if (isLittleEndian)
+        {
+            ReadBits(&data, size);
+        }
+        else
+        {
+            T tempData;
+            ReadBits(&tempData, size);
+            data = SwapBytes(tempData);
+        }
+
     };
     void Read(bool& data)  { ReadBits(&data, 1); }
     void Read(std::string& inStr);

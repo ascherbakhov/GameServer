@@ -2,15 +2,16 @@
 // Created by qazer on 10.04.2019.
 //
 
+#include <utils/ByteSwap.h>
 #include "DataStructures/OutputBitStream.h"
 
 
-OutputBitStream::OutputBitStream(bufflen_t capacity) : mBuffer(nullptr), mHead(0), mCapacity(0)
+OutputBitStream::OutputBitStream(bufflen_t capacity) : mBuffer(nullptr), mHead(0), mCapacity(0), isLittleEndian(IsLittleEndian())
 {
     Reserve(capacity);
 }
 
-OutputBitStream::OutputBitStream(const OutputBitStream &other): mCapacity(other.mCapacity), mHead(other.mHead)
+OutputBitStream::OutputBitStream(const OutputBitStream &other): mCapacity(other.mCapacity), mHead(other.mHead), isLittleEndian(other.isLittleEndian)
 {
     int byteCount = mCapacity >> BYTE_SHIFT;
     mBuffer = static_cast<byte*>(malloc(byteCount));

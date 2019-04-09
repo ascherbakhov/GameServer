@@ -134,10 +134,10 @@ T SwapBytes(T value)
     return ByteSwapper<T>().get(value);
 }
 
-inline int IsBigEndian()
+inline int IsLittleEndian()
 {
     int i=1;
-    return ! *((char *)&i);
+    return *((char *)&i);
 }
 
 #endif //NETWORK_BYTESWAP_H
