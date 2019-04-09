@@ -11,6 +11,7 @@
 
 /*
  * WARNING: this implementation was made for fun and practicing templates.
+ * But nothing is more permanent than temporary :)
  *
  * The main class is ByteSwapper. It is used to swap bytes from little to big endinan and back.
  * For example, ByteSwapper<T>().get(data), where T is actual type of "data".
