@@ -60,3 +60,12 @@ TEST(TemplateSwapper, char)
     EXPECT_EQ(character, swappedCharacter);
     EXPECT_EQ(swappedCharacter, doubleSwappedCharacter);
 }
+
+TEST(TemplateSwapper, bool)
+{
+    bool bl = false;
+    bool swappedbool = ByteSwapper<bool>().get(bl);
+    char doubleSwappedBl = ByteSwapper<char>().get(swappedbool);
+    EXPECT_EQ(doubleSwappedBl, swappedbool);
+    EXPECT_EQ(swappedbool, doubleSwappedBl);
+}
