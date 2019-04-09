@@ -36,7 +36,7 @@ template <class T> class ByteSwapImpl;
 template <>
 class ByteSwapImpl<uint8_t>{
 public:
-    inline uint8_t exec(uint8_t data)
+    inline uint8_t operator()(uint8_t data)
     {
         return data;
     };
@@ -45,7 +45,7 @@ public:
 template <>
 class ByteSwapImpl<uint16_t>{
 public:
-    inline uint16_t exec(uint16_t data)
+    inline uint16_t operator()(uint16_t data)
     {
         return data << 8 | data >> 8;
     };
@@ -54,7 +54,7 @@ public:
 template <>
 class ByteSwapImpl<uint32_t>{
 public:
-    inline uint32_t exec(uint32_t data)
+    inline uint32_t operator()(uint32_t data)
     {
         return
                 data << 24 & 0xff000000 |
@@ -68,7 +68,7 @@ template <>
 class ByteSwapImpl<uint64_t>
 {
 public:
-    inline uint64_t exec(uint64_t data)
+    inline uint64_t operator()(uint64_t data)
     {
         return
                 data << 56 & 0xff00000000000000 |
@@ -99,20 +99,20 @@ private:
     };
 };
 
-template <class T>
-using SameSizedUint =
-typename std::conditional<(sizeof(T) == 1), uint8_t,
-        typename std::conditional<(sizeof(T) == 2), uint16_t,
-                typename std::conditional<(sizeof(T) == 4), uint32_t,
+template <size_t size>
+using UintOfSize =
+typename std::conditional<size == 1, uint8_t,
+        typename std::conditional<size == 2, uint16_t,
+                typename std::conditional<size == 4, uint32_t,
                 uint64_t>::type
         >::type
 >::type;
 
 template <class T>
-using TypeAsInt = TemplateUnion< T, SameSizedUint<T> >;
+using TypeAsInt = TemplateUnion< T, UintOfSize<sizeof(T)> >;
 
 template <class T>
-using IntAsType = TemplateUnion< SameSizedUint<T>, T >;
+using IntAsType = TemplateUnion< UintOfSize<sizeof(T)>, T >;
 
 template <class T>
 class ByteSwapper
@@ -120,9 +120,11 @@ class ByteSwapper
 public:
     T get(T value) const
     {
-        auto swapFunc = ByteSwapImpl<SameSizedUint <T>>();
+        using uint_t = UintOfSize<sizeof(T)>;
+
+        auto swapFunc = ByteSwapImpl<uint_t>();
         auto intDataToSwap = TypeAsInt<T>(value).get();
-        SameSizedUint<T> output = swapFunc.exec(intDataToSwap);
+        uint_t output = swapFunc(intDataToSwap);
         return IntAsType<T>(output).get();
     }
 };

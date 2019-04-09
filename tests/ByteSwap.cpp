@@ -8,21 +8,21 @@
 TEST(ByteSwap, 2Bytes)
 {
     uint16_t num = 24567;
-    uint16_t result = ByteSwapImpl<uint16_t >().exec(ByteSwapImpl<uint16_t>().exec(num));
+    uint16_t result = ByteSwapImpl<uint16_t >()(ByteSwapImpl<uint16_t>()(num));
     EXPECT_EQ(num, result);
 }
 
 TEST(ByteSwap, 4Bytes)
 {
     uint16_t num = 24567;
-    uint16_t result = ByteSwapImpl<uint32_t >().exec(ByteSwapImpl<uint32_t>().exec(num));
+    uint16_t result = ByteSwapImpl<uint32_t >()(ByteSwapImpl<uint32_t>()(num));
     EXPECT_EQ(num, result);
 }
 
 TEST(ByteSwap, 8Bytes)
 {
 uint64_t num = 24567;
-uint64_t result = ByteSwapImpl<uint64_t >().exec(ByteSwapImpl<uint64_t>().exec(num));
+uint64_t result = ByteSwapImpl<uint64_t >()(ByteSwapImpl<uint64_t>()(num));
 EXPECT_EQ(num, result);
 }
 
