@@ -5,6 +5,19 @@
 #include "DataStructures/OutputBitStream.h"
 
 
+OutputBitStream::OutputBitStream(bufflen_t capacity) : mBuffer(nullptr), mHead(0), mCapacity(0)
+{
+    Reserve(capacity);
+}
+
+OutputBitStream::OutputBitStream(const OutputBitStream &other): mCapacity(other.mCapacity), mHead(other.mHead)
+{
+    int byteCount = mCapacity >> BYTE_SHIFT;
+    mBuffer = static_cast<byte*>(malloc(byteCount));
+    memcpy(mBuffer, other.mBuffer, byteCount);
+}
+
+
 void OutputBitStream::WriteBits(byte data, bufflen_t size)
 {
     bufflen_t newHead = mHead + size;

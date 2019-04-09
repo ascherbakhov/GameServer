@@ -20,16 +20,8 @@ private:
     void WriteBits(const void *data, bufflen_t size);
 
 public:
-    explicit OutputBitStream(bufflen_t capacity): mBuffer(nullptr), mHead(0), mCapacity(0)
-    {
-        Reserve(capacity);
-    }
-    OutputBitStream(const OutputBitStream& other): mCapacity(other.mCapacity), mHead(other.mHead)
-    {
-        int byteCount = mCapacity >> BYTE_SHIFT;
-        mBuffer = static_cast<byte*>(malloc(byteCount));
-        memcpy(mBuffer, other.mBuffer, byteCount);
-    }
+    explicit OutputBitStream(bufflen_t capacity);
+    OutputBitStream(const OutputBitStream& other);
     ~OutputBitStream(){ std::free(mBuffer); }
 
     void Reserve(bufflen_t newBitSize);

@@ -4,6 +4,13 @@
 
 #include "DataStructures/InputBitStream.h"
 
+InputBitStream::InputBitStream(const byte *buffer, bufflen_t size): mHead(0)
+{
+    int byteCount = (size % BITS_PER_BYTE == 0) ? (size >> BYTE_SHIFT) : ((size >> BYTE_SHIFT) + 1);
+    mBuffer = static_cast<byte*>(malloc(byteCount));
+    memcpy(mBuffer, buffer, byteCount);
+}
+
 void InputBitStream::Read(std::string& inStr)
 {
     uint32_t elementsCount;
