@@ -24,7 +24,7 @@ Entity* Entities::get(eid_t entityID)
 void Entities::Write(Entity *entity)
 {
     eid_t entityID = getID(entity);
-    mOutpuBitStream->Write(entityID);
+    outputBitStream->Write(entityID);
 }
 
 

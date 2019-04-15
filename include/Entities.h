@@ -28,7 +28,7 @@ private:
     std::unordered_map<eid_t, Entity*> entities;
     std::unordered_map<Entity*, eid_t> entitiesIDs;
 
-    OutputBitStream* mOutpuBitStream;
+    OutputBitStream* outputBitStream;
     InputBitStream* mInputBitStream;
 };
 
