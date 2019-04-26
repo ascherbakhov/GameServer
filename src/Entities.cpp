@@ -4,9 +4,19 @@
 
 #include "Entities.h"
 
-eid_t Entities::getID(Entity* entity)
+eid_t Entities::getID(Entity* entity, bool createOnNotFound)
 {
     auto result = entitiesIDs.find(entity);
+    if (result != entitiesIDs.end())
+    {
+        return result->second;
+    }
+    else if (createOnNotFound)
+    {
+        auto entityID = entityNextID ++ ;
+        AddEntity(entity, entityID);
+        return entityID;
+    }
     return result == entitiesIDs.end() ? result->second : 0;
 }
 
@@ -33,5 +43,18 @@ void Entities::Read(Entity *&entity)
     eid_t entityID;
     mInputBitStream->Read(entityID);
     entity = get(entityID);
+}
+
+void Entities::AddEntity(Entity *entity, eid_t entityID)
+{
+    entities[entityID] = entity;
+    entitiesIDs[entity] = entityID;
+}
+
+void Entities::RemoveEntity(Entity *entity)
+{
+    eid_t entityID = entitiesIDs[entity];
+    entitiesIDs.erase(entity);
+    entities.erase(entityID);
 }
 

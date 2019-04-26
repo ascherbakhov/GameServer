@@ -9,7 +9,7 @@ include_directories(include third-party/googletest/googletest/include third-part
 
 add_executable(Network src/main.cpp src/UDPSocket.cpp include/UDPSocket.h
                src/SocketHelpers.cpp include/SocketHelpers.h src/SockAddr.cpp
-        include/SockAddr.h include/utils/ByteSwap.h src/DataStructures/InputBitStream.cpp include/DataStructures/InputBitStream.h include/utils/Constants.h src/DataStructures/OutputBitStream.cpp include/DataStructures/OutputBitStream.h src/Entities.cpp include/Entities.h src/Entity.cpp include/Entity.h)
+        include/SockAddr.h include/utils/ByteSwap.h src/DataStructures/InputBitStream.cpp include/DataStructures/InputBitStream.h include/utils/Constants.h src/DataStructures/OutputBitStream.cpp include/DataStructures/OutputBitStream.h src/Entities.cpp include/Entities.h src/Entity.cpp include/Entity.h include/ReplicationUtils.h)
 
 add_executable(Tests tests/main.cpp tests/BitStreamTests.cpp tests/ByteSwap.cpp
         include/utils/ByteSwap.h include/DataStructures/InputBitStream.h include/DataStructures/OutputBitStream.h

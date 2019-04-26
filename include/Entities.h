@@ -16,10 +16,13 @@ typedef uint32_t eid_t;
 class Entities
 {
 public:
-    eid_t getID(Entity* entity);
+    eid_t getID(Entity* entity, bool createOnNotFound);
 
     Entity* operator[](eid_t entityID);
     Entity* get(eid_t);
+
+    void AddEntity(Entity* entity, eid_t entityID);
+    void RemoveEntity(Entity* entity);
 
     void Write(Entity* entity);
     void Read(Entity*& entity);
@@ -27,6 +30,8 @@ public:
 private:
     std::unordered_map<eid_t, Entity*> entities;
     std::unordered_map<Entity*, eid_t> entitiesIDs;
+
+    eid_t entityNextID;
 
     OutputBitStream* outputBitStream;
     InputBitStream* mInputBitStream;
