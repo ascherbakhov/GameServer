@@ -3,9 +3,9 @@
 #include "sys/socket.h"
 #include "arpa/inet.h"
 #include "spdlog/spdlog.h"
-#include "SockAddr.h"
-#include "UDPSocket.h"
-#include "SocketHelpers.h"
+#include "SocketUtils/SockAddr.h"
+#include "SocketUtils/UDPSocket.h"
+#include "SocketUtils/SocketHelpers.h"
 
 
 int main() {

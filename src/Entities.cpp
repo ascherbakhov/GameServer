@@ -33,7 +33,7 @@ Entity* Entities::get(eid_t entityID)
 
 void Entities::Write(Entity *entity)
 {
-    eid_t entityID = getID(entity);
+    eid_t entityID = getID(entity, true);
     outputBitStream->Write(entityID);
 }
 
