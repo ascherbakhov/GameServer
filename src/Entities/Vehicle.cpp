@@ -3,3 +3,7 @@
 //
 
 #include "Entities/Vehicle.h"
+
+void Vehicle::Write(OutputBitStream &outputBitStream) {
+    outputBitStream.Write(mSpeed);
+}

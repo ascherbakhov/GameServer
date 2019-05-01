@@ -27,7 +27,7 @@ public:
         mNameToEntityFunc[T::entityType] = T::Create;
     }
 
-    Entity* CreateEntity(uint32_t entityType)
+    Entity* CreateEntityByType(uint32_t entityType)
     {
         auto entityCreatorFunc = mNameToEntityFunc[entityType];
         Entity* entity = entityCreatorFunc();

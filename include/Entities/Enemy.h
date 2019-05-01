@@ -10,9 +10,13 @@
 
 class Enemy: public Entity {
 public:
+    explicit Enemy(uint16_t health): mHealth(health){}
     enum {entityType = 1};
     uint32_t GetEntityType() const override { return entityType;}
-    static Entity* Create() { return new Enemy(); }
+    static Entity* Create() { return new Enemy(100); }
+    void Write(OutputBitStream& outputBitStream);
+private:
+    uint16_t mHealth;
 };
 
 

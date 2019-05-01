@@ -3,3 +3,7 @@
 //
 
 #include "Entities/Enemy.h"
+
+void Enemy::Write(OutputBitStream &outputBitStream) {
+    outputBitStream.Write(mHealth);
+}
