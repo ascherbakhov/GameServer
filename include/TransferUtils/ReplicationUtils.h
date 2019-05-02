@@ -5,6 +5,9 @@
 #ifndef NETWORK_REPLICATIONUTILS_H
 #define NETWORK_REPLICATIONUTILS_H
 
+#include <DataStructures/InputBitStream.h>
+#include <DataStructures/OutputBitStream.h>
+
 enum PacketType
 {
     PT_Hello,
@@ -21,5 +24,18 @@ enum ReplicationAction
     RA_Max
 };
 
+class ReplicationHeader
+{
+public:
+    ReplicationHeader() = default;
+    ReplicationHeader(ReplicationAction action, uint32_t entityID, uint32_t entityType):
+    action(action), entityID(entityID), entityType(entityType) {}
+    void Write(OutputBitStream& outputBitStream);
+    void Read(InputBitStream& inputBitStream);
+private:
+    ReplicationAction action;
+    uint32_t entityID;
+    uint32_t entityType;
+};
 
 #endif //NETWORK_REPLICATIONUTILS_H

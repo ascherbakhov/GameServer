@@ -6,11 +6,13 @@
 #define NETWORK_ENTITIESREGISTRY_H
 
 #include <cstdint>
-#include <unordered_map>
-#include <Entities/Enemy.h>
-#include <Entities/Vehicle.h>
 #include <assert.h>
 #include <functional>
+#include <unordered_map>
+
+#include <Entities/Enemy.h>
+#include <Entities/Vehicle.h>
+
 
 class EntitiesRegistry {
 public:

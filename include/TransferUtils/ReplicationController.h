@@ -14,11 +14,15 @@
 
 class ReplicationController {
 public:
-    ReplicationController() = default;
+    explicit ReplicationController(Entities* entities): mEntities(entities) {};
     void AddEntitiesToStream(OutputBitStream &outputBitStream, const std::vector<Entity *> &replicatedEntities);
     void AddEntityToStream(OutputBitStream &outputBitStream, Entity *entity);
     void ReceiveEntitiesFromStream(InputBitStream &inputBitStream, uint32_t entitiesCount);
     Entity * ReceiveEntityFromStream(InputBitStream &inputBitStream);
+
+    void CreateEntity(OutputBitStream& outputBitStream, Entity* entity);
+    void UpdateEntity(OutputBitStream& outputBitStream, Entity* entity);
+    void DeleteEntity(OutputBitStream& outputBitStream, Entity* entity);
 private:
     Entities* mEntities;
     std::unordered_set<Entity*> mReplicatedEntities;

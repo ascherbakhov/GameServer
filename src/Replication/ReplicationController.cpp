@@ -59,3 +59,23 @@ Entity * ReplicationController::ReceiveEntityFromStream(InputBitStream &inputBit
     entity->Read(inputBitStream);
     return entity;
 }
+
+void ReplicationController::CreateEntity(OutputBitStream &outputBitStream, Entity *entity)
+{
+    ReplicationHeader header(RA_Create, mEntities->getID(entity, true), entity->GetEntityType());
+    outputBitStream.Write(header);
+    entity->Write(outputBitStream);
+}
+
+void ReplicationController::UpdateEntity(OutputBitStream &outputBitStream, Entity *entity)
+{
+    ReplicationHeader header(RA_Update, mEntities->getID(entity, false), entity->GetEntityType());
+    header.Write(outputBitStream);
+    entity->Write(outputBitStream);
+}
+
+void ReplicationController::DeleteEntity(OutputBitStream &outputBitStream, Entity *entity)
+{
+    ReplicationHeader header(RA_Delete, mEntities->getID(entity, false), entity->GetEntityType());
+    header.Write(outputBitStream);
+}
