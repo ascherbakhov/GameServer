@@ -8,6 +8,7 @@
 
 #include <cstdint>
 #include <DataStructures/OutputBitStream.h>
+#include <DataStructures/InputBitStream.h>
 
 class Entity
 {
@@ -16,6 +17,8 @@ public:
     virtual uint32_t GetEntityType() const { return entityType;}
     static Entity* Create() { return new Entity();}
     virtual void Write(OutputBitStream& outputBitStream) const {};
+    virtual void Read(InputBitStream& inputBitStream) const {};
+    virtual void Destroy() const{};
 };
 
 

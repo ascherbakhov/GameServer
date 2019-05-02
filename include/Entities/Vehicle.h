@@ -15,6 +15,8 @@ public:
     uint32_t GetEntityType() const override { return entityType; }
     static Entity* Create() { return new Vehicle(0);}
     void Write(OutputBitStream& outputBitStream);
+    void Read(InputBitStream& inputBitStream);
+    void Destroy();
 private:
     uint8_t mSpeed;
 };

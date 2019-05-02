@@ -11,7 +11,8 @@
 
 /*
  * WARNING: this implementation was made for fun and practicing templates.
- * But nothing is more permanent than temporary :)
+ * It should work, but has some issues, so later I'll be replaced with
+ * other realisation.
  *
  * The main class is ByteSwapper. It is used to swap bytes from little to big endinan and back.
  * For example, ByteSwapper<T>().get(data), where T is actual type of "data".
@@ -19,7 +20,7 @@
  * It uses swapper implementation below(ByteSwapImpl), that takes only integers, to swap bytes.
  * But sometimes we want to swap not integer types.
  *
- * To overcome this TemplateUnion(and IntAsType with TypeAsInt helpers) class is used.
+ * To overcome this, TemplateUnion(and IntAsType with TypeAsInt helpers) class is used.
  * It takes any type as a template parameter and returns integer with the same amount
  * of bytes as input type without casting.
  *

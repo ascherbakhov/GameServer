@@ -13,4 +13,13 @@ enum PacketType
     PT_Max
 };
 
+enum ReplicationAction
+{
+    RA_Create,
+    RA_Delete,
+    RA_Update,
+    RA_Max
+};
+
+
 #endif //NETWORK_REPLICATIONUTILS_H

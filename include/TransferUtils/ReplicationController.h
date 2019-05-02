@@ -6,6 +6,7 @@
 #define NETWORK_REPLICATIONCONTROLLER_H
 
 #include <vector>
+#include <unordered_set>
 #include <DataStructures/OutputBitStream.h>
 #include <Entity.h>
 #include <TransferUtils/ReplicationUtils.h>
@@ -14,10 +15,13 @@
 class ReplicationController {
 public:
     ReplicationController() = default;
-    void ReplicateEntities(OutputBitStream &outputBitStream, const std::vector<Entity*>& replicatedEntities);
-    void ReplicateEntity(OutputBitStream& outputBitStream, Entity* entity);
+    void AddEntitiesToStream(OutputBitStream &outputBitStream, const std::vector<Entity *> &replicatedEntities);
+    void AddEntityToStream(OutputBitStream &outputBitStream, Entity *entity);
+    void ReceiveEntitiesFromStream(InputBitStream &inputBitStream, uint32_t entitiesCount);
+    Entity * ReceiveEntityFromStream(InputBitStream &inputBitStream);
 private:
     Entities* mEntities;
+    std::unordered_set<Entity*> mReplicatedEntities;
 };
 
 

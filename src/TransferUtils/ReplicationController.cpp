@@ -3,21 +3,59 @@
 //
 
 
+#include <TransferUtils/EntitiesRegistry.h>
 #include "TransferUtils/ReplicationController.h"
 
-void ReplicationController::ReplicateEntities(OutputBitStream &outputBitStream,
-                                              const std::vector<Entity *> &replicatedEntities)
+void ReplicationController::AddEntitiesToStream(OutputBitStream &outputBitStream,
+                                                const std::vector<Entity *> &replicatedEntities)
 {
     outputBitStream.Write(PT_ReplicationData);
+    outputBitStream.Write(replicatedEntities.size(), 16); //TODO: check
     for (auto entity : replicatedEntities)
     {
-        ReplicateEntity(outputBitStream, entity);
+        AddEntityToStream(outputBitStream, entity);
     }
 }
 
-void ReplicationController::ReplicateEntity(OutputBitStream &outputBitStream, Entity *entity)
+void ReplicationController::AddEntityToStream(OutputBitStream &outputBitStream, Entity *entity)
 {
     outputBitStream.Write(mEntities->getID(entity, false));
     outputBitStream.Write(entity->GetEntityType());
     entity->Write(outputBitStream);
+}
+
+void ReplicationController::ReceiveEntitiesFromStream(InputBitStream &inputBitStream, uint32_t entitiesCount)
+{
+    std::unordered_set<Entity*> receivedEntities;
+    while (entitiesCount > 0)
+    {
+        Entity* entity = ReceiveEntityFromStream(inputBitStream);
+        receivedEntities.insert(entity);
+        --entitiesCount;
+    }
+
+    for (auto entity : mReplicatedEntities)
+    {
+        if (receivedEntities.find(entity) != receivedEntities.end())
+        {
+            mEntities->RemoveEntity(entity);
+            entity->Destroy();
+        }
+    }
+}
+
+Entity * ReplicationController::ReceiveEntityFromStream(InputBitStream &inputBitStream)
+{
+    uint32_t entityType;
+    uint32_t entityID;
+    inputBitStream.Read(entityID);
+    inputBitStream.Read(entityType);
+    Entity* entity = mEntities->get(entityID);
+    if (!entity)
+    {
+        entity = EntitiesRegistry::Get().CreateEntityByType(entityType);
+        mEntities->AddEntity(entity, entityID);
+    }
+    entity->Read(inputBitStream);
+    return entity;
 }

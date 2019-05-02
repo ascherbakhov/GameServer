@@ -2,8 +2,8 @@
 // Created by qazzer on 01.05.2019.
 //
 
-#ifndef NETWORK_ENTITYDESCRIPTIONMAP_H
-#define NETWORK_ENTITYDESCRIPTIONMAP_H
+#ifndef NETWORK_ENTITIESREGISTRY_H
+#define NETWORK_ENTITIESREGISTRY_H
 
 #include <cstdint>
 #include <unordered_map>
@@ -12,11 +12,11 @@
 #include <assert.h>
 #include <functional>
 
-class EntityDescriptionMap {
+class EntitiesRegistry {
 public:
-    static EntityDescriptionMap& Get()
+    static EntitiesRegistry& Get()
     {
-        static EntityDescriptionMap sInstance;
+        static EntitiesRegistry sInstance;
         return sInstance;
     }
 
@@ -39,9 +39,9 @@ private:
 
 void RegisterEntity()
 {
-    EntityDescriptionMap::Get().RegisterEntity<Entity>();
-    EntityDescriptionMap::Get().RegisterEntity<Vehicle>();
-    EntityDescriptionMap::Get().RegisterEntity<Enemy>();
+    EntitiesRegistry::Get().RegisterEntity<Entity>();
+    EntitiesRegistry::Get().RegisterEntity<Vehicle>();
+    EntitiesRegistry::Get().RegisterEntity<Enemy>();
 }
 
-#endif //NETWORK_ENTITYDESCRIPTIONMAP_H
+#endif //NETWORK_ENTITIESREGISTRY_H

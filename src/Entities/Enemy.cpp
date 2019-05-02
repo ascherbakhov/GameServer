@@ -7,3 +7,11 @@
 void Enemy::Write(OutputBitStream &outputBitStream) {
     outputBitStream.Write(mHealth);
 }
+
+void Enemy::Read(InputBitStream &inputBitStream) {
+    inputBitStream.Read(mHealth);
+}
+
+void Enemy::Destroy() {
+
+}
