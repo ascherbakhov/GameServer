@@ -10,7 +10,7 @@ void ReplicationController::AddEntitiesToStream(OutputBitStream &outputBitStream
                                                 const std::vector<Entity *> &replicatedEntities)
 {
     outputBitStream.Write(PT_ReplicationData);
-    outputBitStream.Write(replicatedEntities.size(), 16); //TODO: check
+    outputBitStream.Write(replicatedEntities.size());
     for (auto entity : replicatedEntities)
     {
         AddEntityToStream(outputBitStream, entity);
@@ -78,4 +78,54 @@ void ReplicationController::DeleteEntity(OutputBitStream &outputBitStream, Entit
 {
     ReplicationHeader header(RA_Delete, mEntities->getID(entity, false), entity->GetEntityType());
     header.Write(outputBitStream);
+}
+
+void ReplicationController::ReceiveCreate(InputBitStream &inputBitStream, ReplicationHeader header)
+{
+    Entity* entity = EntitiesRegistry::Get().CreateEntityByType(header.entityType);
+    mEntities->AddEntity(entity, header.entityID);
+    entity->Read(inputBitStream);
+}
+
+void ReplicationController::ReceiveUpdate(InputBitStream &inputBitStream, ReplicationHeader header)
+{
+    Entity* entity = mEntities->get(header.entityID);
+    if (entity)
+    {
+        entity->Read(inputBitStream);
+    }
+    else
+    {
+        Entity* entity = EntitiesRegistry::CreateEntityByType(header.entityType);
+        entity->Read(inputBitStream);
+        delete entity;
+    }
+}
+
+void ReplicationController::ReceiveDelete(InputBitStream &inputBitStream, ReplicationHeader header)
+{
+    Entity* entity = mEntities.get(mEntities->getID());
+    mEntities->RemoveEntity(entity);
+    entity->destroy()
+}
+
+void ReplicationController::ProcessAction(InputBitStream &inputBitStream)
+{
+    ReplicationHeader header;
+    header.Read(inputBitStream);
+
+    switch (header.action)
+    {
+        case RA_Create:
+            ReceiveCreate(inputBitStream);
+            break;
+        case RA_Update:
+            ReceiveUpdate(inputBitStream);
+            break;
+        case RA_Delete:
+            ReceiveDelete(inputBitStream);
+            break;
+        default:
+            break;
+    }
 }

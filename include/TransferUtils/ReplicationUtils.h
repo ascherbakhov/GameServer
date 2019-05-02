@@ -32,7 +32,7 @@ public:
     action(action), entityID(entityID), entityType(entityType) {}
     void Write(OutputBitStream& outputBitStream);
     void Read(InputBitStream& inputBitStream);
-private:
+
     ReplicationAction action;
     uint32_t entityID;
     uint32_t entityType;

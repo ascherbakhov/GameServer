@@ -23,9 +23,16 @@ public:
     void CreateEntity(OutputBitStream& outputBitStream, Entity* entity);
     void UpdateEntity(OutputBitStream& outputBitStream, Entity* entity);
     void DeleteEntity(OutputBitStream& outputBitStream, Entity* entity);
+
+    void ReceiveCreate(InputBitStream& inputBitStream, ReplicationHeader header);
+    void ReceiveUpdate(InputBitStream& inputBitStream, ReplicationHeader header);
+    void ReceiveDelete(InputBitStream& inputBitStream, ReplicationHeader header);
+
+    void ProcessAction(InputBitStream& inputBitStream);
 private:
     Entities* mEntities;
     std::unordered_set<Entity*> mReplicatedEntities;
+//    std::unordered_map<ReplicationAction , std::function<void()>> actionsMap{};
 };
 
 
