@@ -3,33 +3,33 @@
 //
 
 
-#include <TransferUtils/EntitiesRegistry.h>
-#include "TransferUtils/ReplicationController.h"
+#include <Replication/EntitiesRegistry.h>
+#include "Replication/ReplicationController.h"
 
-void ReplicationController::AddEntitiesToStream(OutputBitStream &outputBitStream,
+void ReplicationController::ReplicateWorldState(OutputBitStream &outputBitStream,
                                                 const std::vector<Entity *> &replicatedEntities)
 {
     outputBitStream.Write(PT_ReplicationData);
     outputBitStream.Write(replicatedEntities.size());
     for (auto entity : replicatedEntities)
     {
-        AddEntityToStream(outputBitStream, entity);
+        ReplicateEntity(outputBitStream, entity);
     }
 }
 
-void ReplicationController::AddEntityToStream(OutputBitStream &outputBitStream, Entity *entity)
+void ReplicationController::ReplicateEntity(OutputBitStream &outputBitStream, Entity *entity)
 {
     outputBitStream.Write(mEntities->getID(entity, false));
     outputBitStream.Write(entity->GetEntityType());
     entity->Write(outputBitStream);
 }
 
-void ReplicationController::ReceiveEntitiesFromStream(InputBitStream &inputBitStream, uint32_t entitiesCount)
+void ReplicationController::ReceiveWorldState(InputBitStream &inputBitStream, uint32_t entitiesCount)
 {
     std::unordered_set<Entity*> receivedEntities;
     while (entitiesCount > 0)
     {
-        Entity* entity = ReceiveEntityFromStream(inputBitStream);
+        Entity* entity = ReceiveEntity(inputBitStream);
         receivedEntities.insert(entity);
         --entitiesCount;
     }
@@ -44,7 +44,7 @@ void ReplicationController::ReceiveEntitiesFromStream(InputBitStream &inputBitSt
     }
 }
 
-Entity * ReplicationController::ReceiveEntityFromStream(InputBitStream &inputBitStream)
+Entity * ReplicationController::ReceiveEntity(InputBitStream &inputBitStream)
 {
     uint32_t entityType;
     uint32_t entityID;
@@ -60,21 +60,21 @@ Entity * ReplicationController::ReceiveEntityFromStream(InputBitStream &inputBit
     return entity;
 }
 
-void ReplicationController::CreateEntity(OutputBitStream &outputBitStream, Entity *entity)
+void ReplicationController::ReplicateCreate(OutputBitStream &outputBitStream, Entity *entity)
 {
     ReplicationHeader header(RA_Create, mEntities->getID(entity, true), entity->GetEntityType());
     outputBitStream.Write(header);
     entity->Write(outputBitStream);
 }
 
-void ReplicationController::UpdateEntity(OutputBitStream &outputBitStream, Entity *entity)
+void ReplicationController::ReplicateUpdate(OutputBitStream &outputBitStream, Entity *entity)
 {
     ReplicationHeader header(RA_Update, mEntities->getID(entity, false), entity->GetEntityType());
     header.Write(outputBitStream);
     entity->Write(outputBitStream);
 }
 
-void ReplicationController::DeleteEntity(OutputBitStream &outputBitStream, Entity *entity)
+void ReplicationController::ReplicateDelete(OutputBitStream &outputBitStream, Entity *entity)
 {
     ReplicationHeader header(RA_Delete, mEntities->getID(entity, false), entity->GetEntityType());
     header.Write(outputBitStream);

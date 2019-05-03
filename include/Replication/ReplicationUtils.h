@@ -21,8 +21,11 @@ enum ReplicationAction
     RA_Create,
     RA_Delete,
     RA_Update,
+    RA_RPC,
+    RA_RMI,
     RA_Max
 };
+
 
 class ReplicationHeader
 {

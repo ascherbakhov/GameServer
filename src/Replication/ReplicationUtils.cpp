@@ -1,7 +1,7 @@
 //
 // Created by qazzer on 03.05.2019.
 //
-#include "TransferUtils/ReplicationUtils.h"
+#include "Replication/ReplicationUtils.h"
 
 void ReplicationHeader::Read(InputBitStream &inputBitStream)
 {
