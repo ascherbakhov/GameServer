@@ -13,7 +13,9 @@ add_executable(Network src/main.cpp src/SocketUtils/UDPSocket.cpp include/Socket
 
 add_executable(Tests tests/main.cpp tests/BitStreamTests.cpp tests/ByteSwap.cpp
         include/utils/ByteSwap.h include/DataStructures/InputBitStream.h include/DataStructures/OutputBitStream.h
-        src/DataStructures/InputBitStream.cpp src/DataStructures/OutputBitStream.cpp)
+        src/DataStructures/InputBitStream.cpp src/DataStructures/OutputBitStream.cpp
+        src/Replication/RPCController.cpp include/Replication/RPCController.h
+        src/Replication/ReplicationUtils.cpp include/Replication/ReplicationUtils.h tests/RPCTest.cpp)
 
 target_link_libraries(Tests gtest gtest_main)
 target_link_libraries(Network spdlog)

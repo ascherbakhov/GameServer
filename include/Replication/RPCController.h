@@ -13,7 +13,7 @@
 #include <DataStructures/InputBitStream.h>
 #include <Entities.h>
 
-typedef std::function<void(InputBitStream&)>* RPCFunction;
+typedef std::function<void(InputBitStream&)> RPCFunction;
 
 class RPCController {
 public:
