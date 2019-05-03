@@ -63,7 +63,7 @@ Entity * ReplicationController::ReceiveEntity(InputBitStream &inputBitStream)
 void ReplicationController::ReplicateCreate(OutputBitStream &outputBitStream, Entity *entity)
 {
     ReplicationHeader header(RA_Create, mEntities->getID(entity, true), entity->GetEntityType());
-    outputBitStream.Write(header);
+    header.Write(outputBitStream);
     entity->Write(outputBitStream);
 }
 
