@@ -96,7 +96,7 @@ void ReplicationController::ReceiveUpdate(InputBitStream &inputBitStream, Replic
     }
     else
     {
-        Entity* entity = EntitiesRegistry::CreateEntityByType(header.entityType);
+        entity = EntitiesRegistry::Get().CreateEntityByType(header.entityType);
         entity->Read(inputBitStream);
         delete entity;
     }
@@ -104,14 +104,14 @@ void ReplicationController::ReceiveUpdate(InputBitStream &inputBitStream, Replic
 
 void ReplicationController::ReceiveDelete(InputBitStream &inputBitStream, ReplicationHeader header)
 {
-    Entity* entity = mEntities.get(mEntities->getID());
+    Entity* entity = mEntities->get(header.entityID);
     mEntities->RemoveEntity(entity);
-    entity->destroy()
+    entity->Destroy();
 }
 
 void ReplicationController::ProcessAction(InputBitStream &inputBitStream)
 {
-    ReplicationHeader header;
+    ReplicationHeader header{};
     header.Read(inputBitStream);
 
     switch (header.action)
