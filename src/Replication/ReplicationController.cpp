@@ -117,13 +117,13 @@ void ReplicationController::ProcessAction(InputBitStream &inputBitStream)
     switch (header.action)
     {
         case RA_Create:
-            ReceiveCreate(inputBitStream);
+            ReceiveCreate(inputBitStream, header);
             break;
         case RA_Update:
-            ReceiveUpdate(inputBitStream);
+            ReceiveUpdate(inputBitStream, header);
             break;
         case RA_Delete:
-            ReceiveDelete(inputBitStream);
+            ReceiveDelete(inputBitStream, header);
             break;
         default:
             break;
