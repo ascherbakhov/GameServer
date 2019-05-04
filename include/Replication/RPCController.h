@@ -15,14 +15,18 @@
 
 typedef std::function<void(InputBitStream&)> RPCFunction;
 
-class RPCController {
+class RPCController
+{
 public:
     explicit RPCController(Entities* entities)
     {
         mEntities = entities;
     }
+
     void RegisterRPCFunction(uint32_t functionID, RPCFunction function);
+
     void ReceiveRPC(InputBitStream& inputBitStream);
+
 private:
     std::unordered_map<uint32_t, RPCFunction> mRPCTable;
     Entities* mEntities;

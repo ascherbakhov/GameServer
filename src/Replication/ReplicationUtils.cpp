@@ -3,7 +3,7 @@
 //
 #include "Replication/ReplicationUtils.h"
 
-void ReplicationHeader::Read(InputBitStream &inputBitStream)
+void ReplicationHeader::Read(InputBitStream& inputBitStream)
 {
     inputBitStream.Read(action);
     inputBitStream.Read(entityID);
@@ -13,7 +13,7 @@ void ReplicationHeader::Read(InputBitStream &inputBitStream)
     }
 }
 
-void ReplicationHeader::Write(OutputBitStream &outputBitStream)
+void ReplicationHeader::Write(OutputBitStream& outputBitStream)
 {
     outputBitStream.Write(action);
     outputBitStream.Write(entityID);

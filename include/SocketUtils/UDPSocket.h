@@ -11,15 +11,22 @@
 #include "SockAddr.h"
 
 
-class UDPSocket {
+class UDPSocket
+{
 public:
     int Bind(SockAddr address);
+
     int ReceiveFrom(void*, int, SockAddr&);
+
     int Close();
+
     void SetNonBlockingMode(bool isNonBlocking);
+
 private:
-    explicit UDPSocket(int socket) : mSocket(socket){};
+    explicit UDPSocket(int socket) : mSocket(socket)
+    {};
     int mSocket;
+
     friend class SocketHelpers;
 };
 

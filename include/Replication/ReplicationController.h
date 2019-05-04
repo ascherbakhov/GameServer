@@ -12,23 +12,34 @@
 #include <Replication/ReplicationUtils.h>
 #include <Entities.h>
 
-class ReplicationController {
+class ReplicationController
+{
 public:
-    explicit ReplicationController(Entities* entities): mEntities(entities) {};
-    void ReplicateWorldState(OutputBitStream &outputBitStream, const std::vector<Entity *> &replicatedEntities);
-    void ReplicateEntity(OutputBitStream &outputBitStream, Entity *entity);
-    void ReceiveWorldState(InputBitStream &inputBitStream, uint32_t entitiesCount);
-    Entity * ReceiveEntity(InputBitStream &inputBitStream);
+    explicit ReplicationController(Entities* entities) : mEntities(entities)
+    {};
 
-    void ReplicateCreate(OutputBitStream &outputBitStream, Entity *entity);
-    void ReplicateUpdate(OutputBitStream &outputBitStream, Entity *entity);
-    void ReplicateDelete(OutputBitStream &outputBitStream, Entity *entity);
+    void ReplicateWorldState(OutputBitStream& outputBitStream, const std::vector<Entity*>& replicatedEntities);
+
+    void ReplicateEntity(OutputBitStream& outputBitStream, Entity* entity);
+
+    void ReceiveWorldState(InputBitStream& inputBitStream, uint32_t entitiesCount);
+
+    Entity* ReceiveEntity(InputBitStream& inputBitStream);
+
+    void ReplicateCreate(OutputBitStream& outputBitStream, Entity* entity);
+
+    void ReplicateUpdate(OutputBitStream& outputBitStream, Entity* entity);
+
+    void ReplicateDelete(OutputBitStream& outputBitStream, Entity* entity);
 
     void ReceiveCreate(InputBitStream& inputBitStream, ReplicationHeader header);
+
     void ReceiveUpdate(InputBitStream& inputBitStream, ReplicationHeader header);
+
     void ReceiveDelete(InputBitStream& inputBitStream, ReplicationHeader header);
 
     void ProcessAction(InputBitStream& inputBitStream);
+
 private:
     Entities* mEntities;
     std::unordered_set<Entity*> mReplicatedEntities;

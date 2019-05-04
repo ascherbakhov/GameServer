@@ -10,10 +10,9 @@ eid_t Entities::getID(Entity* entity, bool createOnNotFound)
     if (result != entitiesIDs.end())
     {
         return result->second;
-    }
-    else if (createOnNotFound)
+    } else if (createOnNotFound)
     {
-        auto entityID = entityNextID ++ ;
+        auto entityID = entityNextID++;
         AddEntity(entity, entityID);
         return entityID;
     }
@@ -31,27 +30,27 @@ Entity* Entities::get(eid_t entityID)
     return result == entities.end() ? result->second : nullptr;
 }
 
-void Entities::Write(Entity *entity)
+void Entities::Write(Entity* entity)
 {
     eid_t entityID = getID(entity, true);
     outputBitStream->Write(entityID);
 }
 
 
-void Entities::Read(Entity *&entity)
+void Entities::Read(Entity*& entity)
 {
     eid_t entityID;
     mInputBitStream->Read(entityID);
     entity = get(entityID);
 }
 
-void Entities::AddEntity(Entity *entity, eid_t entityID)
+void Entities::AddEntity(Entity* entity, eid_t entityID)
 {
     entities[entityID] = entity;
     entitiesIDs[entity] = entityID;
 }
 
-void Entities::RemoveEntity(Entity *entity)
+void Entities::RemoveEntity(Entity* entity)
 {
     eid_t entityID = entitiesIDs[entity];
     entitiesIDs.erase(entity);

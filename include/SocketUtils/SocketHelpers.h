@@ -10,7 +10,8 @@
 #include "UDPSocket.h"
 
 
-class SocketHelpers {
+class SocketHelpers
+{
 public:
     static UDPSocketPtr createUDPSocket();
 };

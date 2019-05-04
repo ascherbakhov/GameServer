@@ -8,8 +8,9 @@
 #include "SocketUtils/SocketHelpers.h"
 
 
-int main() {
-    int bufferLen  = 900;
+int main()
+{
+    int bufferLen = 900;
     char data[bufferLen];
     SockAddr address{"127.0.0.1", 43000};
     UDPSocketPtr socket = SocketHelpers::createUDPSocket();

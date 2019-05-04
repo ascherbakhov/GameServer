@@ -4,11 +4,13 @@
 
 #include "Entities/Vehicle.h"
 
-void Vehicle::Write(OutputBitStream &outputBitStream) {
+void Vehicle::Write(OutputBitStream& outputBitStream)
+{
     outputBitStream.Write(mSpeed);
 }
 
-void Vehicle::Read(InputBitStream &inputBitStream) {
+void Vehicle::Read(InputBitStream& inputBitStream)
+{
     inputBitStream.Read(mSpeed);
 }
 

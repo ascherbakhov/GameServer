@@ -19,12 +19,15 @@ public:
     eid_t getID(Entity* entity, bool createOnNotFound);
 
     Entity* operator[](eid_t entityID);
+
     Entity* get(eid_t);
 
     void AddEntity(Entity* entity, eid_t entityID);
+
     void RemoveEntity(Entity* entity);
 
     void Write(Entity* entity);
+
     void Read(Entity*& entity);
 
 private:

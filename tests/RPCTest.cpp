@@ -34,7 +34,7 @@ TEST(RPCTests, Test1)
     OutputBitStream outputBitStream(256);
     MakeRPCCallTest(outputBitStream, 1, 345, std::string("Hello"));
 
-    InputBitStream inputBitStream(outputBitStream.GetBuffer(), outputBitStream.GetSize());
+    InputBitStream inputBitStream(outputBitStream.GetSize(), outputBitStream.GetBuffer());
     ReplicationHeader header{};
     header.Read(inputBitStream);
     rpcController->ReceiveRPC(inputBitStream);

@@ -7,10 +7,11 @@
 #include <spdlog/spdlog.h>
 #include "SocketUtils/SockAddr.h"
 
-SockAddr::SockAddr(const char* ip_addr, uint16_t port) {
+SockAddr::SockAddr(const char* ip_addr, uint16_t port)
+{
     mAddress.sin_family = AF_INET;
     mAddress.sin_port = htons(port);
-    inet_pton(AF_INET,  ip_addr, &(mAddress.sin_addr));
+    inet_pton(AF_INET, ip_addr, &(mAddress.sin_addr));
 }
 
 size_t SockAddr::Size()
@@ -18,11 +19,13 @@ size_t SockAddr::Size()
     return sizeof(mAddress);
 }
 
-sockaddr* SockAddr::Get() {
+sockaddr* SockAddr::Get()
+{
     return reinterpret_cast<sockaddr*>(&mAddress);
 }
 
-SockAddr::SockAddr(const sockaddr_in& address) {
+SockAddr::SockAddr(const sockaddr_in& address)
+{
     memcpy(&mAddress, &address, sizeof(address));
 }
 

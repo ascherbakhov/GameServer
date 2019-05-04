@@ -10,13 +10,20 @@
 #include <string>
 #include <netinet/in.h>
 
-class SockAddr {
+class SockAddr
+{
 public:
     SockAddr(const char* ip_addr, u_int16_t port);
-    SockAddr(const sockaddr_in&);
-    SockAddr() {memset(&mAddress, 0, sizeof(sockaddr_in));}
+
+    explicit SockAddr(const sockaddr_in&);
+
+    SockAddr()
+    { memset(&mAddress, 0, sizeof(sockaddr_in)); }
+
     size_t Size();
+
     sockaddr* Get();
+
 private:
     sockaddr_in mAddress;
 };

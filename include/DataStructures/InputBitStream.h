@@ -11,20 +11,24 @@
 #include "../utils/ByteSwap.h"
 
 
-class InputBitStream {
+class InputBitStream
+{
 private:
     bufflen_t mHead;
     byte* mBuffer;
     bool isLittleEndian; // Stream endianness is little endian
 
-    void ReadBits(byte &data, bufflen_t size);
+    void ReadBits(byte& data, bufflen_t size);
+
     void ReadBits(void* data, bufflen_t size);
 
 public:
-    explicit InputBitStream(const byte* buffer, bufflen_t size);
-    ~InputBitStream(){ std::free(mBuffer); }
+    explicit InputBitStream(bufflen_t size, const byte* buffer = nullptr);
 
-    template <class T>
+    ~InputBitStream()
+    { std::free(mBuffer); }
+
+    template<class T>
     void Read(T& data, bufflen_t size = sizeof(T) * BITS_PER_BYTE)
     {
         static_assert(std::is_arithmetic<T>::value || std::is_enum<T>::value,
@@ -32,8 +36,7 @@ public:
         if (isLittleEndian)
         {
             ReadBits(&data, size);
-        }
-        else
+        } else
         {
             T tempData;
             ReadBits(&tempData, size);
@@ -41,7 +44,10 @@ public:
         }
 
     };
-    void Read(bool& data)  { ReadBits(&data, 1); }
+
+    void Read(bool& data)
+    { ReadBits(&data, 1); }
+
     void Read(std::string& inStr);
 };
 

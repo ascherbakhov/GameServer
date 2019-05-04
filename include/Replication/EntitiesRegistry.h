@@ -14,7 +14,8 @@
 #include <Entities/Vehicle.h>
 
 
-class EntitiesRegistry {
+class EntitiesRegistry
+{
 public:
     static EntitiesRegistry& Get()
     {
@@ -22,7 +23,7 @@ public:
         return sInstance;
     }
 
-    template <class T>
+    template<class T>
     void RegisterEntity()
     {
         assert(mNameToEntityFunc.find(T::entityType) == mNameToEntityFunc.end());
@@ -35,6 +36,7 @@ public:
         Entity* entity = entityCreatorFunc();
         return entity;
     }
+
 private:
     std::unordered_map<uint32_t, std::function<Entity*()>> mNameToEntityFunc;
 };

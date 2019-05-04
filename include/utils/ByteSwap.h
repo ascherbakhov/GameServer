@@ -32,10 +32,12 @@
 //////////////////////////////////////////////////////////
 //Swapper functions implementations for different bit size
 //////////////////////////////////////////////////////////
-template <class T> class ByteSwapImpl;
+template<class T>
+class ByteSwapImpl;
 
-template <>
-class ByteSwapImpl<uint8_t>{
+template<>
+class ByteSwapImpl<uint8_t>
+{
 public:
     inline uint8_t operator()(uint8_t data)
     {
@@ -43,8 +45,9 @@ public:
     };
 };
 
-template <>
-class ByteSwapImpl<uint16_t>{
+template<>
+class ByteSwapImpl<uint16_t>
+{
 public:
     inline uint16_t operator()(uint16_t data)
     {
@@ -52,20 +55,21 @@ public:
     };
 };
 
-template <>
-class ByteSwapImpl<uint32_t>{
+template<>
+class ByteSwapImpl<uint32_t>
+{
 public:
     inline uint32_t operator()(uint32_t data)
     {
         return
                 data << 24 & 0xff000000 |
                 data << 8 & 0x00ff0000 |
-                data >> 8 &  0x0000ff00 |
-                data >> 24 & 0x000000ff ;
+                data >> 8 & 0x0000ff00 |
+                data >> 24 & 0x000000ff;
     }
 };
 
-template <>
+template<>
 class ByteSwapImpl<uint64_t>
 {
 public:
@@ -75,11 +79,11 @@ public:
                 data << 56 & 0xff00000000000000 |
                 data << 40 & 0x00ff000000000000 |
                 data << 24 & 0x0000ff0000000000 |
-                data << 8 &  0x000000ff00000000 |
-                data >> 8 &  0x00000000ff000000 |
+                data << 8 & 0x000000ff00000000 |
+                data >> 8 & 0x00000000ff000000 |
                 data >> 24 & 0x0000000000ff0000 |
                 data >> 40 & 0x000000000000ff00 |
-                data >> 56 & 0x00000000000000ff ;
+                data >> 56 & 0x00000000000000ff;
     }
 };
 
@@ -87,35 +91,40 @@ public:
 //End Swapper functions
 //////////////////////////////////////////////////////////
 
-template <class fromType, class toType>
+template<class fromType, class toType>
 class TemplateUnion
 {
 public:
-    explicit TemplateUnion(fromType value): input(value){}
-    toType& get(){ return output;}
+    explicit TemplateUnion(fromType value) : input(value)
+    {}
+
+    toType& get()
+    { return output; }
+
 private:
-    union {
+    union
+    {
         fromType input;
         toType output;
     };
 };
 
-template <size_t size>
+template<size_t size>
 using UintOfSize =
 typename std::conditional<size == 1, uint8_t,
         typename std::conditional<size == 2, uint16_t,
                 typename std::conditional<size == 4, uint32_t,
-                uint64_t>::type
+                        uint64_t>::type
         >::type
 >::type;
 
-template <class T>
-using TypeAsInt = TemplateUnion< T, UintOfSize<sizeof(T)> >;
+template<class T>
+using TypeAsInt = TemplateUnion<T, UintOfSize<sizeof(T)> >;
 
-template <class T>
-using IntAsType = TemplateUnion< UintOfSize<sizeof(T)>, T >;
+template<class T>
+using IntAsType = TemplateUnion<UintOfSize<sizeof(T)>, T>;
 
-template <class T>
+template<class T>
 class ByteSwapper
 {
 public:
@@ -129,7 +138,8 @@ public:
         return IntAsType<T>(output).get();
     }
 };
-template <class T>
+
+template<class T>
 T SwapBytes(T value)
 {
     return ByteSwapper<T>().get(value);
@@ -137,8 +147,8 @@ T SwapBytes(T value)
 
 inline int IsLittleEndian()
 {
-    int i=1;
-    return *((char *)&i);
+    int i = 1;
+    return *((char*) &i);
 }
 
 #endif //NETWORK_BYTESWAP_H

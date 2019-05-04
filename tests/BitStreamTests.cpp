@@ -48,7 +48,7 @@ TEST(BitStream, typesSerialization)
     bitStream.Write(uint64);
 
 
-    InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
+    InputBitStream bitStream2(bitStream.GetSize(), bitStream.GetBuffer());
     bitStream2.Read(newBl);
     bitStream2.Read(newUint32);
     bitStream2.Read(newInt8);
@@ -60,15 +60,14 @@ TEST(BitStream, typesSerialization)
     bitStream2.Read(newUint64);
 
 
-
     EXPECT_EQ(newInt16, uint16);
     EXPECT_EQ(newInt8, uint8);
     EXPECT_EQ(bl, newBl);
     EXPECT_EQ(bl2, newBl2);
     EXPECT_EQ(newUint32, uint32);
     EXPECT_EQ(newUint64, uint64);
-    EXPECT_LE(std::abs(floatNum-floatNew), FLOAT_EPS);
-    EXPECT_LE(std::abs(doubleNum-doubleNew), FLOAT_EPS);
+    EXPECT_LE(std::abs(floatNum - floatNew), FLOAT_EPS);
+    EXPECT_LE(std::abs(doubleNum - doubleNew), FLOAT_EPS);
     EXPECT_EQ(newStr, str);
 }
 
@@ -85,7 +84,7 @@ TEST(BitStream, BoolTest)
     bitStream.Write(bl);
     bitStream.Write(num);
 
-    InputBitStream bitStream2(bitStream.GetBuffer(), bitStream.GetSize());
+    InputBitStream bitStream2(bitStream.GetSize(), bitStream.GetBuffer());
     bitStream2.Read(newBl);
     bitStream2.Read(newNum);
 

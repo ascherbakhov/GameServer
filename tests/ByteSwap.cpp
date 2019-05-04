@@ -8,22 +8,22 @@
 TEST(ByteSwap, 2Bytes)
 {
     uint16_t num = 24567;
-    uint16_t result = ByteSwapImpl<uint16_t >()(ByteSwapImpl<uint16_t>()(num));
+    uint16_t result = ByteSwapImpl<uint16_t>()(ByteSwapImpl<uint16_t>()(num));
     EXPECT_EQ(num, result);
 }
 
 TEST(ByteSwap, 4Bytes)
 {
     uint16_t num = 24567;
-    uint16_t result = ByteSwapImpl<uint32_t >()(ByteSwapImpl<uint32_t>()(num));
+    uint16_t result = ByteSwapImpl<uint32_t>()(ByteSwapImpl<uint32_t>()(num));
     EXPECT_EQ(num, result);
 }
 
 TEST(ByteSwap, 8Bytes)
 {
-uint64_t num = 24567;
-uint64_t result = ByteSwapImpl<uint64_t >()(ByteSwapImpl<uint64_t>()(num));
-EXPECT_EQ(num, result);
+    uint64_t num = 24567;
+    uint64_t result = ByteSwapImpl<uint64_t>()(ByteSwapImpl<uint64_t>()(num));
+    EXPECT_EQ(num, result);
 }
 
 TEST(ByteSwap, TemplateUnion)
@@ -40,7 +40,7 @@ TEST(TemplateSwapper, float)
     float floatNum = 5.0;
     float swappedFloat = ByteSwapper<float>().get(floatNum);
     float doubleSwappedFloat = ByteSwapper<float>().get(swappedFloat);
-    EXPECT_LE(std::abs(floatNum-doubleSwappedFloat), 0.1);
+    EXPECT_LE(std::abs(floatNum - doubleSwappedFloat), 0.1);
 }
 
 TEST(TemplateSwapper, double)
@@ -48,7 +48,7 @@ TEST(TemplateSwapper, double)
     double doubleNum = 5.0;
     double swappedDouble = ByteSwapper<double>().get(doubleNum);
     double doubleSwappedDouble = ByteSwapper<double>().get(swappedDouble);
-    EXPECT_LE(std::abs(doubleNum-doubleSwappedDouble), 0.1);
+    EXPECT_LE(std::abs(doubleNum - doubleSwappedDouble), 0.1);
 }
 
 

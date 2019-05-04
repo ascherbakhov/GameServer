@@ -4,13 +4,13 @@
 
 #include "SocketUtils/SocketHelpers.h"
 
-UDPSocketPtr SocketHelpers::createUDPSocket() {
+UDPSocketPtr SocketHelpers::createUDPSocket()
+{
     int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
     if (sockfd > 0)
     {
         return UDPSocketPtr(new UDPSocket(sockfd));
-    }
-    else
+    } else
     {
         spdlog::error("SocketHelpers::createUDPSocket, error={0}", sockfd);
         return nullptr;

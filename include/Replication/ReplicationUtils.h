@@ -31,9 +31,13 @@ class ReplicationHeader
 {
 public:
     ReplicationHeader() = default;
-    explicit ReplicationHeader(ReplicationAction action, uint32_t entityID=0, uint32_t entityType=0):
-    action(action), entityID(entityID), entityType(entityType) {}
+
+    explicit ReplicationHeader(ReplicationAction action, uint32_t entityID = 0, uint32_t entityType = 0) :
+            action(action), entityID(entityID), entityType(entityType)
+    {}
+
     void Write(OutputBitStream& outputBitStream);
+
     void Read(InputBitStream& inputBitStream);
 
     ReplicationAction action;

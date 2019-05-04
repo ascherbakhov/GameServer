@@ -8,15 +8,29 @@
 
 #include <Entity.h>
 
-class Enemy: public Entity {
+class Enemy : public Entity
+{
 public:
-    explicit Enemy(uint16_t health): mHealth(health){}
-    enum {entityType = 1};
-    uint32_t GetEntityType() const override { return entityType;}
-    static Entity* Create() { return new Enemy(100); }
+    explicit Enemy(uint16_t health) : mHealth(health)
+    {}
+
+    enum
+    {
+        entityType = 1
+    };
+
+    uint32_t GetEntityType() const override
+    { return entityType; }
+
+    static Entity* Create()
+    { return new Enemy(100); }
+
     void Write(OutputBitStream& outputBitStream);
-    void Read(InputBitStream &inputBitStream);
+
+    void Read(InputBitStream& inputBitStream);
+
     void Destroy();
+
 private:
     uint16_t mHealth;
 };
